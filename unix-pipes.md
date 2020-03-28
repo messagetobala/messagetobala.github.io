@@ -1,7 +1,8 @@
-
+---
 layout: page
 title: "Unix Pipes"
 permalink: /unix-pipes/
+---
 
 # Understanding pipes in Unix with an example
 
