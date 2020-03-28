@@ -324,7 +324,7 @@ See below implementation and sample output.
                                                              
                                                                      
 
-# The Last (Almost) Step
+# The Last \(Almost\) Step
 
 The previous program almost mimics the behavior of a Unix shell in executing commands chained using a pipe. But it chains together only two commands and also the commands and the arguments are hard coded.
 
