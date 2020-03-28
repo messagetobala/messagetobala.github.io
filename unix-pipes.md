@@ -14,7 +14,7 @@ permalink: /unix-pipes/
 
 [Changing the code of a running process](#Changing-the-code-of-a-running-process)
 
-[The Last (Almost) Step](#The-Last-\(Almost\)-Step)
+[The Last \(Almost\) Step](#The-Last-\(Almost\)-Step)
 
 # Do one thing well
 
