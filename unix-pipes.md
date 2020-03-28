@@ -6,6 +6,8 @@ permalink: /unix-pipes/
 
 # Understanding pipes in Unix with an example
 
+[Do one thing well](#Do-one-thing-well)
+
 # Do one thing well
 
 “***Do one thing well***” is one of the underlying design principles of  Unix operating system. Any one with a little experience  in working with Unix and Unix like systems, would have seen the benefits of  this simple principle,  when they combine different programs  using pipe (‘\|’) in a shell, to accomplish a specific requirement.
@@ -103,6 +105,7 @@ Also note that every character is printed only once. This is because the file of
 A ‘Pipe’ is a construct in the Unix operating system that provides a way for communication between two processes. It could be considered analogous to the ‘Water Pipes’ we see in our household. Just like the ‘Water Pipes’ it has two ends. One is called the ‘Read End’ and another is called the ‘Write End’.   Any thing written in the ‘Write End’ would be available to be read from the ‘Read End’.  These two ends are represented by two file descriptors which are stored in the ‘File Descriptor Table’
 
 A ‘Pipe’  is created using the ‘pipe’ function. The input to the function is an integer array of size 2. On successful return from the ‘pipe’ function, the integer array would be filled with the two file descriptors that represents the two ends of the pipe. The descriptor at index ’0’ represents the read end of the pipe and the descriptor at index ’1’ represents the write end of the pipe.
+
 ***Creating a pipe***
 ```c
       int fd[2];
@@ -187,6 +190,7 @@ This could be achieved through the ‘dup2’ function.  The ‘dup2’ function
 So, using the ‘dup2’ function we can copy the write descriptor of the pipe into descriptor ’1’ which represents the standard output.  Similarly in the child process, we can copy the read descriptor of the pipe into descriptor ’0’ which represents the standard input.
 
 The implementation and sample output is shown below.
+
 ***pipe_3.c***
 ```
     #include <unistd.h>
