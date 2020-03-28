@@ -26,6 +26,7 @@ In Unix everything is considered as a file.  Whether we are reading/writing from
 The key thing to understand is that the ‘File Descriptor Table’ is per process but the ‘File Table’ is shared across all processes.  This brings us to a question. ***When a process uses fork and creates a child process, how will the ‘File Descriptor Table’ of the child process look like?***
 
 Take a look at the following program and the sample output.
+
 ***pipe_1.c***
 ```c
     #include <stdio.h>
@@ -309,7 +310,7 @@ See below implementation and sample output.
 
 The previous program almost mimics the behavior of a Unix shell in executing commands chained using a pipe. But it chains together only two commands and also the commands and the arguments are hard coded.
 
-The below program is more closer to the shell. It accepts as input ,  the command chain to execute. For each command, it forks a new process, executes the command and passes on the output to the next command.   It still lacks few features like handling input with characters like ‘”,\,|’ .  I will leave that as an exercise .  Hope this was useful.
+The below program is more closer to the shell. It accepts as input ,  the command chain to execute. For each command, it forks a new process, executes the command and passes on the output to the next command.   It still lacks few features like handling input with characters like ‘”,\\,\|’ .  I will leave that as an exercise .  Hope this was useful.
 
 ***pipe.c***
 ```c
@@ -357,52 +358,52 @@ The below program is more closer to the shell. It accepts as input ,  the comman
     }
     
     int main(int argc, char** argv) {
-            if (argc != 2) {
-                printf ("Usage pipe <commands to execute>");
-                exit(-1);
-            }
-            int* fd = calloc(2, sizeof(int));      
-            if (pipe(fd) != 0) {
-                printf ("Error creating pipe. %s", strerror(errno));
-                exit(errno);
-            }
-            const char* command = argv[1];
-            int prev_commands_length = 0;
-            int i = 0;
-            int quote_begin = 0;
-            while (1) {
-                if (command[i] == '|') {
-                    /*  End of a command */
-                    int pid = fork();
-                    if (pid == -1) {
-                        printf("Error creating pipe. %s", strerror(errno));
-                        exit(errno);
-                    } else if (pid > 0) {
-                        /*
-                          Parent will take care of command seen.
-                          And send its output to child.
-                         */
-                        dup2(fd[1], 1);
-                        close(fd[0]);        
-                        char* current_command = calloc(i + 1 - prev_commands_length, sizeof(char));
-                        strncpy(current_command, command + prev_commands_length, i - prev_commands_length);
-                        execute_command(current_command);
-                        } else {
-                           dup2(fd[0], 0);
-                           close(fd[1]);
-                           /* Create new pipe for chaining the next two commands */
-                           fd = calloc(2, sizeof(int));
-                           pipe(fd);
-                        }
-                        prev_commands_length = i + 1;
-                } else if (command[i] == '\0') {
+        if (argc != 2) {
+            printf ("Usage pipe <commands to execute>");
+            exit(-1);
+        }
+        int* fd = calloc(2, sizeof(int));      
+        if (pipe(fd) != 0) {
+            printf ("Error creating pipe. %s", strerror(errno));
+            exit(errno);
+        }
+        const char* command = argv[1];
+        int prev_commands_length = 0;
+        int i = 0;
+        int quote_begin = 0;
+        while (1) {
+            if (command[i] == '|') {
+                /*  End of a command */
+                int pid = fork();
+                if (pid == -1) {
+                    printf("Error creating pipe. %s", strerror(errno));
+                    exit(errno);
+                } else if (pid > 0) {
+                    /*
+                      Parent will take care of command seen.
+                      And send its output to child.
+                     */
+                    dup2(fd[1], 1);
+                    close(fd[0]);        
                     char* current_command = calloc(i + 1 - prev_commands_length, sizeof(char));
                     strncpy(current_command, command + prev_commands_length, i - prev_commands_length);
                     execute_command(current_command);
-                }
-    
-                i++;                
+                    } else {
+                       dup2(fd[0], 0);
+                       close(fd[1]);
+                       /* Create new pipe for chaining the next two commands */
+                       fd = calloc(2, sizeof(int));
+                       pipe(fd);
+                    }
+                    prev_commands_length = i + 1;
+            } else if (command[i] == '\0') {
+                char* current_command = calloc(i + 1 - prev_commands_length, sizeof(char));
+                strncpy(current_command, command + prev_commands_length, i - prev_commands_length);
+                execute_command(current_command);
             }
+
+            i++;                
+        }
     }
 ```                                                                  
 
