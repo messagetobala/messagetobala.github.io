@@ -1,6 +1,8 @@
-layout: page
+---
+layout: default
 title: "Unix pipes"
 permalink: /unix-pipes/
+---
 
 # Understanding pipes in Unix with an example
 
