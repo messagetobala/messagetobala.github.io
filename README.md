@@ -248,7 +248,7 @@ The implementation and sample output is shown below.
 
 # Changing the code of a running process
 
-In our previous program, the parent process writes to it is standard output and the child process reads the same information from its standard input. This is exactly what happens when we run a command like “cat file1 | wc -l” in Unix shell. 
+In our previous program, the parent process writes to it is standard output and the child process reads the same information from its standard input. This is exactly what happens when we run a command like “cat file1 \| wc -l” in Unix shell. 
 
 But instead of just writing some fixed data into standard output, we want our parent process to run another program (like ‘cat’ in the example) .  Similarly in our child process instead of just reading from standard input and printing it to standard output, we want to run another program that will process the input (like ‘wc’ in the example).
 
