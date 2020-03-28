@@ -2,7 +2,7 @@
 
 # Do one thing well
 
-“***Do one thing well***” is one of the underlying design principles of  Unix operating system. Any one with a little experience  in working with Unix and Unix like systems, would have seen the benefits of  this simple principle,  when they combine different programs  using pipe (‘|’) in a shell, to accomplish a specific requirement.
+“***Do one thing well***” is one of the underlying design principles of  Unix operating system. Any one with a little experience  in working with Unix and Unix like systems, would have seen the benefits of  this simple principle,  when they combine different programs  using pipe (‘\|’) in a shell, to accomplish a specific requirement.
 
 For example, lets say we have a log file called ‘application.log’  where for every request received by an application, there is a log line like ‘Request  from user1’.  Now if we want to find the users who are sending the most number of requests, we could run the following command.
 
@@ -67,7 +67,9 @@ Take a look at the following program and the sample output.
         } 
     }
 ```
-                                                            **pipe_1.c**
+
+                                                            ***pipe_1.c***
+
 
 
 ```bash
