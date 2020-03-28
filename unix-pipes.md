@@ -108,7 +108,7 @@ Also note that every character is printed only once. This is because the file of
 
 ![](https://paper-attachments.dropbox.com/s_40A490A0758DF9E1DC078DAB5932FC2B373486202053BADFD85DB4A709379186_1585397250445_image2.png)
 
-# ‘Pipe’ a way to pass on information
+## ‘Pipe’ a way to pass on information ##
 
 A ‘Pipe’ is a construct in the Unix operating system that provides a way for communication between two processes. It could be considered analogous to the ‘Water Pipes’ we see in our household. Just like the ‘Water Pipes’ it has two ends. One is called the ‘Read End’ and another is called the ‘Write End’.   Any thing written in the ‘Write End’ would be available to be read from the ‘Read End’.  These two ends are represented by two file descriptors which are stored in the ‘File Descriptor Table’
 
@@ -189,7 +189,7 @@ the ‘File Descriptor Table’ of the child process will have a copy of the two
 As can be seen from the sample output, the child process is able to read data from the pipe that parent process wrote into the pipe.  Thus ‘Pipe’ provides us a way to pass on information from a parent process to child process.
 
 
-# Replacing the output and input descriptors
+## Replacing the output and input descriptors ##
 
 In the previous program we were able to pass information from one process to another process using the  write/read descriptors of the pipe. But for our use case, we want a process to write data to its standard output and it should be readable from the standard input of another process.  That is, in the previous program the parent process instead of writing into fd[1] should write into descriptor ’1’ (Which represents standard output). And  the child process instead of reading from fd[0] should read from descriptor ’0’ (Which represents the standard input).
 
@@ -264,7 +264,7 @@ The implementation and sample output is shown below.
                                               
 
 
-# Changing the code of a running process
+## Changing the code of a running process ##
 
 In our previous program, the parent process writes to it is standard output and the child process reads the same information from its standard input. This is exactly what happens when we run a command like “cat file1 \| wc -l” in Unix shell. 
 
@@ -324,7 +324,7 @@ See below implementation and sample output.
                                                              
                                                                      
 
-# The last step
+## The last step ##
 
 The previous program almost mimics the behavior of a Unix shell in executing commands chained using a pipe. But it chains together only two commands and also the commands and the arguments are hard coded.
 
