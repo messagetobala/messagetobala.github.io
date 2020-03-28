@@ -27,7 +27,7 @@ The key thing to understand is that the ‘File Descriptor Table’ is per proce
 
 Take a look at the following program and the sample output.
 
-
+```c
     #include <stdio.h>
     #include <stdlib.h>
     #include <fcntl.h>
@@ -66,11 +66,11 @@ Take a look at the following program and the sample output.
                 exit(0);                                
         } 
     }
+```
+                                                            **pipe_1.c**
 
-                                                    **pipe_1.c**
 
-
-
+```bash
     #>echo -n "ABCDEFGHIJKLMNOPQRSTUVWXYZ" > /tmp/file1 
     #>gcc pipe_0.c 
     #>./a.out 
@@ -81,8 +81,8 @@ Take a look at the following program and the sample output.
     Process [CHILD] Reading from descriptor 3 character D
     Process [PARENT] Reading from descriptor 3 character E
     Process [CHILD] Reading from descriptor 3 character F
-                                                    
-                                                    **Sample Output**
+```
+                                                       **Sample Output**
 
 
 The program, opens a file for reading, reads a single character and then calls fork to create a child process.   After fork, both the parent and the child process continue to read from the same file descriptor.    
@@ -100,19 +100,19 @@ A ‘Pipe’ is a construct in the Unix operating system that provides a way for
 
 A ‘Pipe’  is created using the ‘pipe’ function. The input to the function is an integer array of size 2. On successful return from the ‘pipe’ function, the integer array would be filled with the two file descriptors that represents the two ends of the pipe. The descriptor at index ’0’ represents the read end of the pipe and the descriptor at index ’1’ represents the write end of the pipe.
 
-
+```c
       int fd[2];
       if (pipe(fd) != 0) {
           printf ("Error creating pipe. %s", strerror(errno));
           exit(errno);
       }
-
+```
                                                         **Creating a pipe**
 
 In the earlier section, we saw that , when a child process is forked it gets an exact copy of the parent’s ‘File Descriptor Table’.   So, if a process creates a pipe and then forks a child process, 
 the ‘File Descriptor Table’ of the child process will have a copy of the two descriptors that represent the two ends of the pipe.  ***So if the parent process writes data to fd[1], could it be read from the fd[0] in the child process? .***   Let us implement it and see.  ******The program below creates a pipe and then calls fork to create a child process.  After fork, In the parent process we write data to the write end (fd[1]) of the pipe .  In the child process we try to read data from the read end (fd[0]) of the pipe.
 
-
+```c
     #include <unistd.h>
     #include <stdio.h>
     #include <string.h>
@@ -158,16 +158,16 @@ the ‘File Descriptor Table’ of the child process will have a copy of the two
             exit(0);                        
         }
     }
-
+```
                                                            **pipe_2.c**
                                                        
-
+```bash
     #>gcc pipe_1.c 
     #>./a.out 
     Process [PARENT] Writing data to pipe
     Process [CHILD] Reading from descriptor 3 
     Data
-
+```
                                                             **Sample Output**    
 
 As can be seen from the sample output, the child process is able to read data from the pipe that parent process wrote into the pipe.  Thus ‘Pipe’ provides us a way to pass on information from a parent process to child process.
@@ -183,7 +183,7 @@ So, using the ‘dup2’ function we can copy the write descriptor of the pipe i
 
 The implementation and sample output is shown below.
 
-
+```
     #include <unistd.h>
     #include <stdio.h>
     #include <string.h>
@@ -235,14 +235,15 @@ The implementation and sample output is shown below.
             exit(0);                        
         }
     }
-
+```
                                                             **pipe_3.c**
                                                             
-
+```bash
     #> gcc pipe_3.c 
     #>./a.out 
     Process [CHILD] Reading from descriptor 0 
     Data
+```    
                                               **Sample Output**
 
 
@@ -258,6 +259,7 @@ So we can modify the previous program such that after fork, in the parent proces
 
 See below implementation and sample output.
 
+```c
     #include <unistd.h>
     #include <stdio.h>
     #include <string.h>
@@ -290,17 +292,17 @@ See below implementation and sample output.
             execlp("cat", "cat" , "/tmp/file1" , NULL);        
         }
     }
-    
+```  
 
                                                                 **pipe_4.c**
                                                                 
-
+```bash
     #> gcc pipe_4.c 
     #> cat /tmp/file1
     ABCDEF
     #>./a.out 
            6
-
+```
                                                              **Sample Output**
                                                                      
 
@@ -310,7 +312,7 @@ The previous program almost mimics the behavior of a Unix shell in executing com
 
 The below program is more closer to the shell. It accepts as input ,  the command chain to execute. For each command, it forks a new process, executes the command and passes on the output to the next command.   It still lacks few features like handling input with characters like ‘”,\,|’ .  I will leave that as an exercise .  Hope this was useful.
 
-
+```c
     #include <unistd.h>
     #include <stdio.h>
     #include <string.h>
@@ -402,12 +404,12 @@ The below program is more closer to the shell. It accepts as input ,  the comman
                 i++;                
             }
     }
-    
+```    
 
                                                               **pipe.c**
 
 
-
+```bash
     #> gcc pipe.c
     #> cat /tmp/file2 
     apple
@@ -424,6 +426,6 @@ The below program is more closer to the shell. It accepts as input ,  the comman
        1 mango
        1 kiwi
        1 guava
+```  
                                               **Sample Output**    
-
 
