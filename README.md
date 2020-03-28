@@ -26,7 +26,7 @@ In Unix everything is considered as a file.  Whether we are reading/writing from
 The key thing to understand is that the ‘File Descriptor Table’ is per process but the ‘File Table’ is shared across all processes.  This brings us to a question. ***When a process uses fork and creates a child process, how will the ‘File Descriptor Table’ of the child process look like?***
 
 Take a look at the following program and the sample output.
-
+***pipe_1.c***
 ```c
     #include <stdio.h>
     #include <stdlib.h>
@@ -68,10 +68,7 @@ Take a look at the following program and the sample output.
     }
 ```
 
-                                                            ***pipe_1.c***
-
-
-
+***Sample Output***                                                            
 ```bash
     #>echo -n "ABCDEFGHIJKLMNOPQRSTUVWXYZ" > /tmp/file1 
     #>gcc pipe_0.c 
@@ -84,9 +81,7 @@ Take a look at the following program and the sample output.
     Process [PARENT] Reading from descriptor 3 character E
     Process [CHILD] Reading from descriptor 3 character F
 ```
-                                                       **Sample Output**
-
-
+                                                       
 The program, opens a file for reading, reads a single character and then calls fork to create a child process.   After fork, both the parent and the child process continue to read from the same file descriptor.    
 
 From the output, we can see that the child process is able to read from the same file descriptor as the parent. This is  because the child process gets an exact copy of the  ‘File Descriptor Table’ from the parent at time of calling fork. See the image below.
@@ -101,7 +96,7 @@ Also note that every character is printed only once. This is because the file of
 A ‘Pipe’ is a construct in the Unix operating system that provides a way for communication between two processes. It could be considered analogous to the ‘Water Pipes’ we see in our household. Just like the ‘Water Pipes’ it has two ends. One is called the ‘Read End’ and another is called the ‘Write End’.   Any thing written in the ‘Write End’ would be available to be read from the ‘Read End’.  These two ends are represented by two file descriptors which are stored in the ‘File Descriptor Table’
 
 A ‘Pipe’  is created using the ‘pipe’ function. The input to the function is an integer array of size 2. On successful return from the ‘pipe’ function, the integer array would be filled with the two file descriptors that represents the two ends of the pipe. The descriptor at index ’0’ represents the read end of the pipe and the descriptor at index ’1’ represents the write end of the pipe.
-
+***Creating a pipe***
 ```c
       int fd[2];
       if (pipe(fd) != 0) {
@@ -109,11 +104,12 @@ A ‘Pipe’  is created using the ‘pipe’ function. The input to the functio
           exit(errno);
       }
 ```
-                                                        **Creating a pipe**
+                                                        
 
 In the earlier section, we saw that , when a child process is forked it gets an exact copy of the parent’s ‘File Descriptor Table’.   So, if a process creates a pipe and then forks a child process, 
 the ‘File Descriptor Table’ of the child process will have a copy of the two descriptors that represent the two ends of the pipe.  ***So if the parent process writes data to fd[1], could it be read from the fd[0] in the child process? .***   Let us implement it and see.  ******The program below creates a pipe and then calls fork to create a child process.  After fork, In the parent process we write data to the write end (fd[1]) of the pipe .  In the child process we try to read data from the read end (fd[0]) of the pipe.
 
+***pipe_2.c***
 ```c
     #include <unistd.h>
     #include <stdio.h>
@@ -161,8 +157,8 @@ the ‘File Descriptor Table’ of the child process will have a copy of the two
         }
     }
 ```
-                                                           **pipe_2.c**
-                                                       
+                                                           
+***Sample Output***                                                         
 ```bash
     #>gcc pipe_1.c 
     #>./a.out 
@@ -170,7 +166,7 @@ the ‘File Descriptor Table’ of the child process will have a copy of the two
     Process [CHILD] Reading from descriptor 3 
     Data
 ```
-                                                            **Sample Output**    
+                                                             
 
 As can be seen from the sample output, the child process is able to read data from the pipe that parent process wrote into the pipe.  Thus ‘Pipe’ provides us a way to pass on information from a parent process to child process.
 
@@ -184,7 +180,7 @@ This could be achieved through the ‘dup2’ function.  The ‘dup2’ function
 So, using the ‘dup2’ function we can copy the write descriptor of the pipe into descriptor ’1’ which represents the standard output.  Similarly in the child process, we can copy the read descriptor of the pipe into descriptor ’0’ which represents the standard input.
 
 The implementation and sample output is shown below.
-
+***pipe_3.c***
 ```
     #include <unistd.h>
     #include <stdio.h>
@@ -238,15 +234,15 @@ The implementation and sample output is shown below.
         }
     }
 ```
-                                                            **pipe_3.c**
-                                                            
+                                                           
+***Sample Output***                                                            
 ```bash
     #> gcc pipe_3.c 
     #>./a.out 
     Process [CHILD] Reading from descriptor 0 
     Data
 ```    
-                                              **Sample Output**
+                                              
 
 
 # Changing the code of a running process
@@ -261,6 +257,7 @@ So we can modify the previous program such that after fork, in the parent proces
 
 See below implementation and sample output.
 
+***pipe_4.c***
 ```c
     #include <unistd.h>
     #include <stdio.h>
@@ -296,8 +293,8 @@ See below implementation and sample output.
     }
 ```  
 
-                                                                **pipe_4.c**
                                                                 
+***Sample Output***                                                                
 ```bash
     #> gcc pipe_4.c 
     #> cat /tmp/file1
@@ -305,7 +302,7 @@ See below implementation and sample output.
     #>./a.out 
            6
 ```
-                                                             **Sample Output**
+                                                             
                                                                      
 
 # The Last (Almost) Step
@@ -314,6 +311,7 @@ The previous program almost mimics the behavior of a Unix shell in executing com
 
 The below program is more closer to the shell. It accepts as input ,  the command chain to execute. For each command, it forks a new process, executes the command and passes on the output to the next command.   It still lacks few features like handling input with characters like ‘”,\,|’ .  I will leave that as an exercise .  Hope this was useful.
 
+***pipe.c***
 ```c
     #include <unistd.h>
     #include <stdio.h>
@@ -406,11 +404,9 @@ The below program is more closer to the shell. It accepts as input ,  the comman
                 i++;                
             }
     }
-```    
+```                                                                  
 
-                                                              **pipe.c**
-
-
+***Sample Output***
 ```bash
     #> gcc pipe.c
     #> cat /tmp/file2 
@@ -429,5 +425,5 @@ The below program is more closer to the shell. It accepts as input ,  the comman
        1 kiwi
        1 guava
 ```  
-                                              **Sample Output**    
+                                                 
 
