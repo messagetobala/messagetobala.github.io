@@ -66,7 +66,9 @@ Take a look at the following program and the sample output.
                 exit(0);                                
         } 
     }
-                                                            **pipe_1.c**
+
+                                                    **pipe_1.c**
+
 
 
     #>echo -n "ABCDEFGHIJKLMNOPQRSTUVWXYZ" > /tmp/file1 
@@ -79,7 +81,8 @@ Take a look at the following program and the sample output.
     Process [CHILD] Reading from descriptor 3 character D
     Process [PARENT] Reading from descriptor 3 character E
     Process [CHILD] Reading from descriptor 3 character F
-                                                       **Sample Output**
+                                                    
+                                                    **Sample Output**
 
 
 The program, opens a file for reading, reads a single character and then calls fork to create a child process.   After fork, both the parent and the child process continue to read from the same file descriptor.    
