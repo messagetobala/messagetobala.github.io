@@ -7,10 +7,14 @@ permalink: /unix-pipes/
 # Understanding pipes in Unix with an example
 
 [Do one thing well](#Do-one-thing-well)
+
 [Everything is a file](#Everything-is-a-file)
+
 [Replacing the output / input descriptors](#Replacing-the-output-/-input-descriptors)
+
 [Changing the code of a running process](#Changing-the-code-of-a-running-process)
-[The Last (Almost) Step](#The-Last-(Almost)-Step)
+
+[The Last (Almost) Step](#The-Last-\(Almost\)-Step)
 
 # Do one thing well
 
