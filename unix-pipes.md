@@ -1,3 +1,7 @@
+layout: page
+title: "Unix pipes"
+permalink: /unix-pipes/
+
 # Understanding pipes in Unix with an example
 
 # Do one thing well
