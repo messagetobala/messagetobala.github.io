@@ -33,7 +33,7 @@ As you can see, using  four different programs each designed to do a particular 
 
 # Everything is a file
 
-In Unix everything is considered as a file.  Whether we are reading/writing from/to a file, device or sockets, they are all considered as a file.  Every process has a  data structure called ‘***File Descriptor Table***’ , which would have an entry for each file used by the process.  You could think of it as Hash Table where the key is an integer called the ‘***File Descriptor***’ and the value is a pointer to an  entry in another data structure called the ‘***File Table***’.   ‘File Table’ contains information about the file like the current offset etc.  Every process by default will have three entries in the ‘File Descriptor Table’ for keys 0,1,2 which represent the standard input, standard output and standard error.
+In Unix everything is considered as a file.  Whether we are reading/writing from/to a file, device or sockets, they are all considered as a file.  Every process has a  data structure called ‘ ***File Descriptor Table*** ’ , which would have an entry for each file used by the process.  You could think of it as Hash Table where the key is an integer called the ‘ ***File Descriptor*** ’ and the value is a pointer to an  entry in another data structure called the ‘ ***File Table*** ’.   ‘File Table’ contains information about the file like the current offset etc.  Every process by default will have three entries in the ‘File Descriptor Table’ for keys 0,1,2 which represent the standard input, standard output and standard error.
 
 
 ![](https://paper-attachments.dropbox.com/s_40A490A0758DF9E1DC078DAB5932FC2B373486202053BADFD85DB4A709379186_1585396525514_pipe1.png)
