@@ -33,7 +33,7 @@ As you can see, using  four different programs each designed to do a particular 
 
 # Everything is a file
 
-In Unix everything is considered as a file.  Whether we are reading/writing from/to a file, device or sockets, they are all considered as a file.  Every process has a  data structure called ‘***File Descriptor Table***’ , which would have an entry for each file used by the process.  You could think of it as Hash Table where the key is an integer called the ***‘***File Descriptor’ and the value is a pointer to an  entry in another data structure called the ‘***File Table***’.   ‘File Table’ contains information about the file like the current offset etc.  Every process by default will have three entries in the ‘File Descriptor Table’ for keys 0,1,2 which represent the standard input, standard output and standard error.
+In Unix everything is considered as a file.  Whether we are reading/writing from/to a file, device or sockets, they are all considered as a file.  Every process has a  data structure called ‘***File Descriptor Table***’ , which would have an entry for each file used by the process.  You could think of it as Hash Table where the key is an integer called the ‘***File Descriptor***’ and the value is a pointer to an  entry in another data structure called the ‘***File Table***’.   ‘File Table’ contains information about the file like the current offset etc.  Every process by default will have three entries in the ‘File Descriptor Table’ for keys 0,1,2 which represent the standard input, standard output and standard error.
 
 
 ![](https://paper-attachments.dropbox.com/s_40A490A0758DF9E1DC078DAB5932FC2B373486202053BADFD85DB4A709379186_1585396525514_pipe1.png)
@@ -125,7 +125,9 @@ A ‘Pipe’  is created using the ‘pipe’ function. The input to the functio
                                                         
 
 In the earlier section, we saw that , when a child process is forked it gets an exact copy of the parent’s ‘File Descriptor Table’.   So, if a process creates a pipe and then forks a child process, 
-the ‘File Descriptor Table’ of the child process will have a copy of the two descriptors that represent the two ends of the pipe.  ***So if the parent process writes data to fd[1], could it be read from the fd[0] in the child process? .***   Let us implement it and see.  ******The program below creates a pipe and then calls fork to create a child process.  After fork, In the parent process we write data to the write end (fd[1]) of the pipe .  In the child process we try to read data from the read end (fd[0]) of the pipe.
+the ‘File Descriptor Table’ of the child process will have a copy of the two descriptors that represent the two ends of the pipe.  ***So if the parent process writes data to fd[1], could it be read from the fd[0] in the child process? .***   Let us implement it and see.  
+
+The program below creates a pipe and then calls fork to create a child process.  After fork, In the parent process we write data to the write end (fd[1]) of the pipe .  In the child process we try to read data from the read end (fd[0]) of the pipe.
 
 ***pipe_2.c***
 ```c
