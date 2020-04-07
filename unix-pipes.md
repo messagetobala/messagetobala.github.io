@@ -16,6 +16,8 @@ permalink: /unix-pipes/
 
 [The last step](#the-last-step)
 
+[‘Pipe’ a way to pass on information](#‘Pipe’-a-way-to-pass-on-information)
+
 ## Do one thing well ##
 
 “***Do one thing well***” is one of the underlying design principles of  Unix operating system. Any one with a little experience  in working with Unix and Unix like systems, would have seen the benefits of  this simple principle,  when they combine different programs  using pipe (‘\|’) in a shell, to accomplish a specific requirement.
