@@ -16,7 +16,7 @@ permalink: /unix-pipes/
 
 [The last step](#the-last-step)
 
-[‘Pipe’ a way to pass on information](#‘Pipe’-a-way-to-pass-on-information)
+[‘Pipe’ a way to pass on information](#Pipe-a-way-to-pass-on-information)
 
 ## Do one thing well ##
 
