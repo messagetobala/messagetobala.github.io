@@ -10,13 +10,14 @@ permalink: /unix-pipes/
 
 [Everything is a file](#everything-is-a-file)
 
+[‘Pipe’ a way to pass on information](#pipe-a-way-to-pass-on-information)
+
 [Replacing the output and input descriptors](#replacing-the-output-and-input-descriptors)
 
 [Changing the code of a running process](#changing-the-code-of-a-running-process)
 
 [The last step](#the-last-step)
 
-[‘Pipe’ a way to pass on information](#'pipe'-a-way-to-pass-on-information)
 
 ## Do one thing well ##
 
