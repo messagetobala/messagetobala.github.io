@@ -1,4 +1,4 @@
-# Salt, Pepper and Passwords
+# Salt, Pepper And Passwords
 
 ## “Passwords” - Something which only the user should know
 
@@ -126,21 +126,21 @@ So far we looked at how to securely store passwords of users. But in any applica
     If your application is running in Linux/Unix like systems,  the owner of the file should be set to “root” and the group should be set to a specific group used for configuration files say “config-group”. Only “root” should have write permissions. The group should have only “read” permissions. For “others” no permission should be given.  The application can add the “config-group” as one of its auxiliary group.  This will ensure that only users with “sudo” permission are manually able to edit the configuration file while the application can read the configuration file. We could also provide read access to certain employees like SRE by adding them to the group “config-group”
 
 - Credentials of internal systems
-
-      We should use strong passwords for internal systems like databases.  While specifying the passwords in the configuration file, we should specify only the encrypted version. We should not provide the passwords in plain text. Application while reading the configuration, will decrypt the password and use it.
+    We should use strong passwords for internal systems like databases.  While specifying the passwords in the configuration file, we should specify only the encrypted version. We should not provide the passwords in plain text. Application while reading the configuration, will decrypt the password and use it.
       
-      We should also not use any default usernames for accessing such internal systems. For example, if we are using “MySql” database our application should not be connecting to the database as “root”  user.  We should create a separate user for each application, and for that user we should provide access only to the tables and stored procedures it uses.
+    We should also not use any default usernames for accessing such internal systems. For example, if we are using “MySql” database our application should not be connecting to the database as “root”  user.  We should create a separate user for each application, and for that user we should provide access only to the tables and stored procedures it uses.
+
       
 
 - Securing encryption keys
 
-      Applications would normally have one or more encryption keys which it will use to encrypt secrets like  the “Pepper” , “Database Passwords” in configuration file etc.  How do we secure them. We cannot encrypt them using another key. If we do so, we have to then secure the “other” encryption key.
+    Applications would normally have one or more encryption keys which it will use to encrypt secrets like  the “Pepper” , “Database Passwords” in configuration file etc.  How do we secure them. We cannot encrypt them using another key. If we do so, we have to then secure the “other” encryption key.
       
-      One solution is we can split such encryption key’s into two parts. One part we can store it in a configuration file(Need to make sure the permission of the file are restricted) and the other part we can keep it as part of the code.  So when the application starts, it will have one part of the key in its memory and the other part it will read from the configuration file.  By this method we are just making it more harder for an hacker to get hold of the “encryption key”.
+    One solution is we can split such encryption key’s into two parts. One part we can store it in a configuration file(Need to make sure the permission of the file are restricted) and the other part we can keep it as part of the code.  So when the application starts, it will have one part of the key in its memory and the other part it will read from the configuration file.  By this method we are just making it more harder for an hacker to get hold of the “encryption key”.
       
-      We could also use services  like AWS KMS . In this case , the encryption key itself will not be stored anywhere on the application server. The application  will make a call to KMS API to get the encryption key, perform encryption/decryption operations and then delete the key from memory as soon as possible.  
+    We could also use services  like AWS KMS . In this case , the encryption key itself will not be stored anywhere on the application server. The application  will make a call to KMS API to get the encryption key, perform encryption/decryption operations and then delete the key from memory as soon as possible.  
       
-      If the encryption keys are used for very critical operations like issuing server certificates there are special devices  called Hardware Security Modules (HSM) which should be used to store the encryption keys.   
+    If the encryption keys are used for very critical operations like issuing server certificates there are special devices  called Hardware Security Modules (HSM) which should be used to store the encryption keys.   
 
 
 ## Conclusion
