@@ -18,11 +18,13 @@ First, let us list down the threats from which we need to protect the passwords 
 
 -    Application should be able to authenticate the user by comparing the password entered by the  user in the login page and the stored version of the password in the database.
 -    Application should provide a way for the user to reset his password in-case he has forgotten the password. 
+
 ## Encryption vs Hashing
 
 The first question is, **How to store the passwords in the database?** It is obvious that it should not be stored in plaintext.  We should store it in a way such that even those with access to the database cannot figure out the password of a user, by looking at the stored version of the password in the database.   This gives us two options, **“Encryption”** and **“Hashing”**
  
-**Encryption**
+## Encryption
+
 Encryption is a way in which a string S1 is transformed (aka encryption)  into another string S2 by using another string K1 called a Key.     Now the important thing to understand is the transformation is reversible. So we can use the Key K1 and transform (aka decryption) the encrypted string S2 back to the original string S2.  
 
 For example, in the below snippet we are using "openssl” utility to encrypt a string “password@123” using the key string “SecretKey”.  We then decrypt the encrypted string to get back the original string. The algorithm used here is “AES-256-CBC”. It is only for an example. There are other better  algorithms like AES-GCM which should be used in production.
@@ -36,7 +38,7 @@ For example, in the below snippet we are using "openssl” utility to encrypt a 
    
 So, how can we use encryption for storing user passwords? . When the user registers for our application, by providing the username and password, we can encrypt the password provided by the user with a key and store the encrypted password in our database.  Next time when the user logs in, we can read the encrypted password from database, decrypt it using the same key and compare it with the password entered in the login page. If both matches, the user is authenticated and we allow him to login.
    
-**Hashing**
+## Hashing
 Hashing is a process in which a string S1 is transformed into another string S2. Unlike encryption, the transformation process in hashing is not reversible. That is,  given hashed string S2 we cannot get back the original string S1.  Another interesting point to know is that the transformed string S2 will always be of a fixed length that depends on the hashing algorithm. 
 
 Some common hashing algorithms are,
@@ -119,10 +121,9 @@ So far we looked at how to securely store passwords of users. But in any applica
 
 - Configuration Files
 
-      Every application needs a config file.   Configuration file contains information like the URL of other endpoints the application communicates with, the credentials to access databases and internal API’s etc.  To protect such information, the permission of the configuration file should be as restrictive as possible. 
-      
-      If your application is running in Linux/Unix like systems,  the owner of the file should be set to “root” and the group should be set to a specific group used for configuration files say “config-group”. Only “root” should have write permissions. The group should have only “read” permissions. For “others” no permission should be given.  The application can add the “config-group” as one of its auxiliary group.  This will ensure that only users with “sudo” permission are manually able to edit the configuration file while the application can read the configuration file. We could also provide read access to certain employees like SRE by adding them to the group “config-group”
-      
+    Every application needs a config file.   Configuration file contains information like the URL of other endpoints the application communicates with, the credentials to access databases and internal API’s etc.  To protect such information, the permission of the configuration file should be as restrictive as possible.
+    
+    If your application is running in Linux/Unix like systems,  the owner of the file should be set to “root” and the group should be set to a specific group used for configuration files say “config-group”. Only “root” should have write permissions. The group should have only “read” permissions. For “others” no permission should be given.  The application can add the “config-group” as one of its auxiliary group.  This will ensure that only users with “sudo” permission are manually able to edit the configuration file while the application can read the configuration file. We could also provide read access to certain employees like SRE by adding them to the group “config-group”
 
 - Credentials of internal systems
 
