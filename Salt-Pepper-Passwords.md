@@ -29,12 +29,12 @@ Encryption is a way in which a string S1 is transformed (aka encryption)  into a
 
 For example, in the below snippet we are using "openssl” utility to encrypt a string “password@123” using the key string “SecretKey”.  We then decrypt the encrypted string to get back the original string. The algorithm used here is “AES-256-CBC”. It is only for an example. There are other better  algorithms like AES-GCM which should be used in production.
 
-
+```bash
     #>echo -n "password@123"  > /tmp/password.txt
     #>openssl aes-256-cbc -a -pass pass:SecretKey -in /tmp/password.txt > /tmp/encrypted.txt
     #>aes-256-cbc -d -a -pass pass:SecretKey -in /tmp/encrypted.txt 
     password@123
-
+```
    
 So, how can we use encryption for storing user passwords? . When the user registers for our application, by providing the username and password, we can encrypt the password provided by the user with a key and store the encrypted password in our database.  Next time when the user logs in, we can read the encrypted password from database, decrypt it using the same key and compare it with the password entered in the login page. If both matches, the user is authenticated and we allow him to login.
    
@@ -50,10 +50,11 @@ Some common hashing algorithms are,
 
 In the snippet below, we are hashing the text “password@123” using sha-256 algorithm. The output is shown as a Hex String (Each byte is represented as two characters) of length 64 characters.
 
-
+```bash
     #>echo -n "password@123"  > /tmp/password.txt
     #>shasum -a 256 /tmp/secret.text
     2b217fd26f0506d7cfe87e08483838fe8bf130ce6b3a987d94adfd3d043454a5
+```
 
 So, how can we use hashing for storing user passwords? At the time of registration , we could hash the password entered by the user and stored the hashed password in the database. When user logs in , we can hash the plaintext password entered by the user and compare it with the hashed password from database. If both matches, we allow the user to login.
 
@@ -97,10 +98,11 @@ Below snippet shows the hash of  the string “password@12312370ede5a5926b34de07
 
 If you now take the generated hash and go to the site https://md5decrypt.net/en/Sha256 you will not get the corresponding plain text.
 
-
+```bash
     #>echo -n "password@12370ede5a5926b34de07adca2229518cf573db67da77063add80e2d1d3f250d7d6" > /tmp/secret.text 
     #>shasum -a 256 /tmp/secret.text 
     e8105552b5c48b925af72c59a6f4228a5acb891a451114ffab1c5d08375fb00b
+```
 
 Now with this approach even if the attacker knows the user name , salt and hashed password of every user, it makes it next to impossible for him to find out the password. To do this for every user, for every possible password string,  he needs to calculate the hash of  “password string + salt string” .  [This site](https://thycotic.force.com/support/s/article/Calculating-Password-Complexity) estimates that if password is 10 characters long, and assuming it could be from a pool of 80 characters, it would take almost 3 years on a super computer to calculate the sha-512 hash of all possible combinations.  So before the hacker can break the password, the password would have expired and the application would have asked the user to change the password. 
 
