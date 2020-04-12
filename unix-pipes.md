@@ -4,7 +4,7 @@ title: "Unix pipes"
 permalink: /unix-pipes/
 ---
 
-# Understanding pipes in Unix with an example
+# Understanding pipes in Unix with a sample implementation
 
 [Do one thing well](#do-one-thing-well)
 
