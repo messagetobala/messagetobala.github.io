@@ -12,7 +12,7 @@
 
 [Encryption vs Hashing - The winner is](#encryption-vs-hashing-the-winner-is)
 
-[Time is precious] (#time-is-precious)
+[Time is precious](#time-is-precious)
 
 [Add some “Salt”](#add-some-salt)
 
