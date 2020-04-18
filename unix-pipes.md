@@ -2,6 +2,8 @@
 layout: default
 title: "Unix pipes"
 permalink: /unix-pipes/
+categories:
+  - Jekyll
 comments_id: 1
 ---
 
