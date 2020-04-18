@@ -1,5 +1,28 @@
 # Salt, Pepper And Passwords
 
+[“Passwords” - Something which only the user should know](#passwords-somethig-which-only-the-user-should-know)
+
+[Threats and Requirements](#threats-and-requirements)
+
+[Encryption vs Hashing](#encryption-vs-hashing)
+
+[Encryption](#encryption)
+
+[Hashing](#hashing)
+
+[Encryption vs Hashing - The winner is](#encryption-vs-hashing-the-winner-is)
+
+[Time is precious] (#time-is-precious)
+
+[Add some “Salt”](#add-some-salt)
+
+[Pepper](#pepper)
+
+[Making sure our own house is in order](#making-sure-our-own-house-is-in-order)
+
+[Conclusion](#conclusion)
+
+
 ## “Passwords” - Something which only the user should know
 
 Passwords are the first line of defense  in preventing malicious actors  from impersonating us and accessing the applications we use.  Although we are seeing  applications that are relying solely  on SMS based OTP authentication, instead of passwords(Which is a very bad idea as [Twitter CEO found out](https://www.wired.com/story/jack-dorsey-twitter-hacked/) ),  a vast majority of the application out there rely on passwords as the first factor of authentication.   It is very important that the passwords are stored securely by the application we use.  For any company, it is a disaster if the passwords of their users fall into the wrong hands.  In this article, I will share some of the things I learnt about how applications should store and manage passwords in a secure way. 
