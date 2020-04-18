@@ -1,6 +1,6 @@
 # Salt, Pepper And Passwords
 
-[“Passwords” - Something which only the user should know](#passwords-somethig-which-only-the-user-should-know)
+[“Passwords” - Something which only the user should know](#passwords--somethig-which-only-the-user-should-know)
 
 [Threats and Requirements](#threats-and-requirements)
 
@@ -10,7 +10,7 @@
 
 [Hashing](#hashing)
 
-[Encryption vs Hashing - The winner is](#encryption-vs-hashing-the-winner-is)
+[Encryption vs Hashing - The winner is](#encryption-vs-hashing--the-winner-is)
 
 [Time is precious](#time-is-precious)
 
