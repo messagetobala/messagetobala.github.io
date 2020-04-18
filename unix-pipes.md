@@ -2,6 +2,7 @@
 layout: default
 title: "Unix pipes"
 permalink: /unix-pipes/
+comments_id: 1
 ---
 
 # Understanding pipes in Unix with a sample implementation
