@@ -1,5 +1,9 @@
 # Spoof Me If You Can
 
+# Header 1
+
+This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+
 # Email
 
 Email could be considered as the first social media platform that gained widespread usage. Invented primarily  for researchers spread across the globe to collaborate and share information, slowly it found its way into every common man’s life. I still remember the days, where we used to forward "Good Morning"  messages to friends via Email.  Though  today "Gmail" and "Yahoo" groups have been replaced by "WhatsApp" groups, Email is still widely used for official communication.  All the organizations that we interact with, like Banks, E-Commerce sites, Government agencies etc use Email as the preferred way of communication making Email  an indispensable part of our life.  
