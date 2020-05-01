@@ -8,4 +8,4 @@ A collection of articles where I share my thoughts on interesting programming to
 
 [Salt, Pepper And Passwords](https://messagetobala.github.io/Salt-Pepper-Passwords)
 
-[Spoof Me If You Can] (https://messagetobala.github.io/Spoof-Me-If-You-Can)
+[Spoof Me If You Can](https://messagetobala.github.io/Spoof-Me-If-You-Can)
