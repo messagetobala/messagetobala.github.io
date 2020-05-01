@@ -63,6 +63,7 @@ Before we dive  into the details, let us look into some basic terminology relate
 
                             
                                       **A sample email message** 
+                                      
     ```                        
     From: user_alice@gmail.com
     To: user_bob@outlook.com
@@ -83,10 +84,12 @@ Before we dive  into the details, let us look into some basic terminology relate
  
 
                           **MX record of outlook.com domain obtained via dig command**
+                          
    ```                     
     #> dig outlook.com mx +short
     5 outlook-com.olc.protection.outlook.com.
     ``` 
+    
 # Understanding Email Message Flow
 
 Let us see with an example, on how all the pieces mentioned in the previous section fit together. Assume that we have two users Alice and Bob.  Alice wants to send a message to Bob from her email account **"user_alice@gmail.com"** . Bob’s email address is **"user_bob@outlook.com"** .  For understanding purpose, let’s assume Alice is using SWAKS  as her email client. It is a command line tool using which we can send message.  The benefit is we can see the actual SMTP commands that are being sent when a message is sent. 
