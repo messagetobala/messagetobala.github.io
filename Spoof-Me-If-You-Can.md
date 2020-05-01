@@ -25,11 +25,9 @@ This is  a software application that users use to access email messages sent to 
 This is a software application that email service providers run to provide email functionality.  There are several important pieces to a email server.  The most important ones are,
     
     - IMAP  Server
-
            Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
         
     - SMTP Server
-       
            This part of the email server is responsible for the following use cases.
            
         - Receiving the messages that are being sent by its own users and deliver them to the specified recipients. 
@@ -55,7 +53,7 @@ This is a software application that email service providers run to provide email
 
 Multi-purpose Internet Message Extension (MIME) is a standard that defines the format of an email message. As per this standard, a email message consists of a header part followed by a empty line which then followed by the body part.  The body part contains the actual content of the message.  The header part provides details like the from email address, subject , date etc.  One of the important headers is the "From" header. 
                                                                                                     
-**A sample email message**                                      
+*A sample email message*                                      
 ```                        
 From: user_alice@gmail.com
 To: user_bob@outlook.com
@@ -73,7 +71,7 @@ This is a sample email message. Email messages consists of header part and one o
 "Mail Exchange" (MX) record is DNS record type that gives us the hostname  of the email server of a domain.  For example, if the MTA running in Gmail email server want to deliver a message to a recipient with email address "user@outlook.com", it needs to know the IP address of the "outlook.com" domain’s email server.  This information is published via DNS MX records.
  
 
-**MX record of outlook.com domain obtained via dig command**
+*MX record of outlook.com domain obtained via dig command*
 ```                     
 #> dig outlook.com mx +short
 5 outlook-com.olc.protection.outlook.com.
@@ -83,7 +81,7 @@ This is a sample email message. Email messages consists of header part and one o
 
 Let us see with an example, on how all the pieces mentioned in the previous section fit together. Assume that we have two users Alice and Bob.  Alice wants to send a message to Bob from her email account **"user_alice@gmail.com"** . Bob’s email address is **"user_bob@outlook.com"** .  For understanding purpose, let’s assume Alice is using SWAKS  as her email client. It is a command line tool using which we can send message.  The benefit is we can see the actual SMTP commands that are being sent when a message is sent. 
 
-**A SWAKS command to send messages with authentication**
+*A SWAKS command to send messages with authentication*
 ```
 >./swaks --server smtp.gmail.com:465 \
 --auth-user "rbkrbkrbkrbk7@gmail.com" --auth-password "mynxswhsogohdmhr" \
@@ -222,7 +220,7 @@ In Step 2, there is no authentication.  When the email server of the domain "out
  
 So, it is possible for any one to connect to "outlook.com" email server and submit a message that has "user_alice@gmail.com" in the "MAIL FROM" smtp command and the "FROM" MIME header. 
 
-**A SWAKS command to send messages without authencation**
+*A SWAKS command to send messages without authencation*
 ```
 >./swaks --server outlook-com.olc.protection.outlook.com:25 \
 --to user_bob@outlook.com --from "user_alice@gmail.com" \
@@ -237,7 +235,7 @@ Any one can run the above  command and  Bob would see a message like below in hi
 ![](https://paper-attachments.dropbox.com/s_22872381B5E0C682806D56C31A547CD4B1E74782917704884319BBD6C1B203D3_1588310190961_image.png)
 
 
-**SMTP transcript of above command**  
+*SMTP transcript of above command* 
 ```
 EHLO automation1.localdomain
 250-BO1IND01FT005.mail.protection.outlook.com Hello [34.200.131.8]
