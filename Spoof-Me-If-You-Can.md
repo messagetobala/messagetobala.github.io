@@ -38,10 +38,14 @@ Before we dive  into the details, let us look into some basic terminology relate
         - Receive messages that are being sent to its users from other email servers.
         
           SMTP stands for Simple Mail Transfer Protocol and  defines the way on how new messages should be submitted to a SMTP server.  The protocol specifies a set of commands using which client can pass on information like the sender, recipients and the actual message.  After sending a command, the client should wait for a response from the server before sending the next command. Some important commands are,
+          
              HELO/EHLO -  In this command the client specifies its hostname or ip address.
+          
              MAIL FROM - For specifying the sender email address.
-            RCPT  TO - For specifying recipient email address. For each recipient the email client should send a separate RCPT TO command
-            DATA - This indicates that the client will next send the actual message in MIME format.
+            
+             RCPT  TO - For specifying recipient email address. For each recipient the email client should send a separate       RCPT TO command
+             
+             DATA - This indicates that the client will next send the actual message in MIME format.
       
     SMTP servers listen on port 587/465 (for use case 1) and port 25 (for use case 2). After receiving a message SMTP servers usually hand it over to another component called MTA for delivery.
 
@@ -55,7 +59,7 @@ Before we dive  into the details, let us look into some basic terminology relate
 
                             
                                       **A sample email message** 
-                            
+    ```                        
     From: user_alice@gmail.com
     To: user_bob@outlook.com
     Message-ID: <459848100.0.1587815129693@[192.168.1.2]>
@@ -66,7 +70,7 @@ Before we dive  into the details, let us look into some basic terminology relate
     Content-Transfer-Encoding: 7bit
     
     This is a sample email message. Email messages consists of header part and one or more body parts.       
-
+    ``` 
      
 
 - MX DNS Record
@@ -75,9 +79,10 @@ Before we dive  into the details, let us look into some basic terminology relate
  
 
                           **MX record of outlook.com domain obtained via dig command**
-                        
+   ```                     
     #> dig outlook.com mx +short
     5 outlook-com.olc.protection.outlook.com.
+    ``` 
 # Understanding Email Message Flow
 
 Let us see with an example, on how all the pieces mentioned in the previous section fit together. Assume that we have two users Alice and Bob.  Alice wants to send a message to Bob from her email account **"user_alice@gmail.com"** . Bob’s email address is **"user_bob@outlook.com"** .  For understanding purpose, let’s assume Alice is using SWAKS  as her email client. It is a command line tool using which we can send message.  The benefit is we can see the actual SMTP commands that are being sent when a message is sent. 
