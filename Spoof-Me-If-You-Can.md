@@ -60,21 +60,20 @@ Before we dive  into the details, let us look into some basic terminology relate
 - MIME
 
      Multi-purpose Internet Message Extension (MIME) is a standard that defines the format of an email message. As per this standard, a email message consists of a header part followed by a empty line which then followed by the body part.  The body part contains the actual content of the message.  The header part provides details like the from email address, subject , date etc.  One of the important headers is the "From" header. 
-                            
-                                      **A sample email message** 
-                                      
-    ```                        
-    From: user_alice@gmail.com
-    To: user_bob@outlook.com
-    Message-ID: <459848100.0.1587815129693@[192.168.1.2]>
-    Subject: Spoof Me If You Can
-    Date: Sat, 25 Apr 2020 17:15:29 +0530 (IST)
-    MIME-Version: 1.0
-    Content-Type: text/plain; charset=us-ascii
-    Content-Transfer-Encoding: 7bit
-    
-    This is a sample email message. Email messages consists of header part and one or more body parts.       
-    ``` 
+                                                                                                    
+**A sample email message**                                      
+```                        
+From: user_alice@gmail.com
+To: user_bob@outlook.com
+Message-ID: <459848100.0.1587815129693@[192.168.1.2]>
+Subject: Spoof Me If You Can
+Date: Sat, 25 Apr 2020 17:15:29 +0530 (IST)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+This is a sample email message. Email messages consists of header part and one or more body parts.       
+``` 
      
 
 - MX DNS Record
@@ -82,13 +81,11 @@ Before we dive  into the details, let us look into some basic terminology relate
 "Mail Exchange" (MX) record is DNS record type that gives us the hostname  of the email server of a domain.  For example, if the MTA running in Gmail email server want to deliver a message to a recipient with email address "user@outlook.com", it needs to know the IP address of the "outlook.com" domain’s email server.  This information is published via DNS MX records.
  
 
-                          **MX record of outlook.com domain obtained via dig command**
-                          
-                          
-   ```                     
-    #> dig outlook.com mx +short
-    5 outlook-com.olc.protection.outlook.com.
-    ``` 
+**MX record of outlook.com domain obtained via dig command**
+```                     
+#> dig outlook.com mx +short
+5 outlook-com.olc.protection.outlook.com.
+``` 
     
 # Understanding Email Message Flow
 
