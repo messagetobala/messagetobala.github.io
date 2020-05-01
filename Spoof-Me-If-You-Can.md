@@ -15,25 +15,30 @@ Unfortunately the popularity of Email has also made it,  the number one preferre
 
 Before we dive into the details, let us look into some basic terminology related to Email.
 
-- Email Service Providers  
+- Email Service Providers
+
 These are organizations that provide email functionality to other organizations or to individual users. Google , Yahoo, Microsoft are examples of email service providers.  For example, as an individual user, I can use  the free email service provided by Microsoft and get an email address in ‘outlook.com’ domain for my personal use.  If I am running my own organization with my own domain, I can use Microsoft’s O365 service to get email service for my organization.
 
 - Email Client
+
 This is  a software application that users use to access email messages sent to them and to compose and send new messages.  Email Clients use IMAP and SMTP protocols to retrieve and send messages. When we install the email client, we would have to configure it with our email address, password and details of our email service provider. Here, by Email Clients I am referring to desktop based clients like Outlook, Thunderbird etc.  Websites like "gmail.com" ,    "yahoo.com" do not use IMAP or SMTP. They are based on HTTP.
            
-- Email Server  
+- Email Server
+
 This is a software application that email service providers run to provide email functionality.  There are several important pieces to a email server.  The most important ones are,
     
     - IMAP  Server
-           Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
+      
+      Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
         
     - SMTP Server
-           This part of the email server is responsible for the following use cases.
+      
+      This part of the email server is responsible for the following use cases.
            
         - Receiving the messages that are being sent by its own users and deliver them to the specified recipients. 
         - Receive messages that are being sent to its users from other email servers.
         
-          SMTP stands for Simple Mail Transfer Protocol and  defines the way on how new messages should be submitted to a SMTP server.  The protocol specifies a set of commands using which client can pass on information like the sender, recipients and the actual message.  After sending a command, the client should wait for a response from the server before sending the next command. Some important commands are,
+      SMTP stands for Simple Mail Transfer Protocol and  defines the way on how new messages should be submitted to a SMTP server.  The protocol specifies a set of commands using which client can pass on information like the sender, recipients and the actual message.  After sending a command, the client should wait for a response from the server before sending the next command. Some important commands are,
           
              HELO/EHLO -  In this command the client specifies its hostname or ip address.
           
@@ -43,17 +48,17 @@ This is a software application that email service providers run to provide email
              
              DATA - This indicates that the client will next send the actual message in MIME format.
       
-    SMTP servers listen on port 587/465 (for use case 1) and port 25 (for use case 2). After receiving a message SMTP servers usually hand it over to another component called MTA for delivery.
+      SMTP servers listen on port 587/465 (for use case 1) and port 25 (for use case 2). After receiving a message SMTP servers usually hand it over to another component called MTA for delivery.
 
     - MTA
     
-        Mail Transfer Agent (MTA) is the part of the email server that delivers the new messages to  the intended recipients. If the recipients are in the same email server, it just needs to persist the message on the recipients mailbox location. If the recipient is on another email server, it would need to connect to that email server and deliver the message.
+      Mail Transfer Agent (MTA) is the part of the email server that delivers the new messages to  the intended recipients. If the recipients are in the same email server, it just needs to persist the message on the recipients mailbox location. If the recipient is on another email server, it would need to connect to that email server and deliver the message.
     
 - MIME
 
 Multi-purpose Internet Message Extension (MIME) is a standard that defines the format of an email message. As per this standard, a email message consists of a header part followed by a empty line which then followed by the body part.  The body part contains the actual content of the message.  The header part provides details like the from email address, subject , date etc.  One of the important headers is the "From" header. 
                                                                                                     
-*A sample email message*                                      
+####A sample email message                                      
 ```                        
 From: user_alice@gmail.com
 To: user_bob@outlook.com
