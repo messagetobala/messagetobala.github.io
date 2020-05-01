@@ -60,7 +60,6 @@ Before we dive  into the details, let us look into some basic terminology relate
 - MIME
 
      Multi-purpose Internet Message Extension (MIME) is a standard that defines the format of an email message. As per this standard, a email message consists of a header part followed by a empty line which then followed by the body part.  The body part contains the actual content of the message.  The header part provides details like the from email address, subject , date etc.  One of the important headers is the "From" header. 
-
                             
                                       **A sample email message** 
                                       
@@ -84,6 +83,7 @@ Before we dive  into the details, let us look into some basic terminology relate
  
 
                           **MX record of outlook.com domain obtained via dig command**
+                          
                           
    ```                     
     #> dig outlook.com mx +short
