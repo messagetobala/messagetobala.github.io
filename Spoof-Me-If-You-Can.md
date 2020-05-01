@@ -1,43 +1,36 @@
 # Spoof Me If You Can
 
-# Header 1
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
-# Email
+## Email
 
 Email could be considered as the first social media platform that gained widespread usage. Invented primarily  for researchers spread across the globe to collaborate and share information, slowly it found its way into every common man’s life. I still remember the days, where we used to forward "Good Morning"  messages to friends via Email.  Though  today "Gmail" and "Yahoo" groups have been replaced by "WhatsApp" groups, Email is still widely used for official communication.  All the organizations that we interact with, like Banks, E-Commerce sites, Government agencies etc use Email as the preferred way of communication making Email  an indispensable part of our life.  
 
-    
-
 Unfortunately the popularity of Email has also made it,  the number one preferred way for hackers and spammers to carry out their malicious activities.  One of the techniques used by both these groups is very simple and is called "Email Spoofing".   In this article, we will look at what "Email Spoofing" is and look at the preventive measures like SPF, DKIM and DMARC that were introduced to stop it.
 
-
-# Email Spoofing
+## Email Spoofing
 
 "Email Spoofing" is  a technique where hackers/spammers send specially crafted email messages to unsuspecting persons.  When the recipient of the message opens it for reading, it would look like the message has come from an email address of a person or organization know to them, thus making the recipient to trust the contents of the message. Often these messages would have some malicious attachments, downloading which would allow the hacker to gain control over the recipient’s system. Or, the message may request the recipient  to share some sensitive information by replying to the email (The reply could made to be delivered to an email address that is different from the ‘From’ email address) or  by clicking on a website link included in the message.
 
-# Some basic terms and concepts
+## Some basic terms and concepts
 
-Before we dive  into the details, let us look into some basic terminology related to Email.
-
+Before we dive into the details, let us look into some basic terminology related to Email.
 
 - Email Service Providers  
-    These are organizations that provide email functionality to other organizations or to individual users. Google , Yahoo, Microsoft are examples of email service providers.  For example, as an individual user, I can use  the free email service provided by Microsoft and get an email address in ‘outlook.com’ domain for my personal use.  If I am running my own organization with my own domain, I can use Microsoft’s O365 service to get email service for my organization.
-
+These are organizations that provide email functionality to other organizations or to individual users. Google , Yahoo, Microsoft are examples of email service providers.  For example, as an individual user, I can use  the free email service provided by Microsoft and get an email address in ‘outlook.com’ domain for my personal use.  If I am running my own organization with my own domain, I can use Microsoft’s O365 service to get email service for my organization.
 
 - Email Client
-    This is  a software application that users use to access email messages sent to them and to compose and send new messages.  Email Clients use IMAP and SMTP protocols to retrieve and send messages. When we install the email client, we would have to configure it with our email address, password and details of our email service provider. Here, by Email Clients I am referring to desktop based clients like Outlook, Thunderbird etc.  Websites like "gmail.com" ,    "yahoo.com" do not use IMAP or SMTP. They are based on HTTP.
-
-            
-
+This is  a software application that users use to access email messages sent to them and to compose and send new messages.  Email Clients use IMAP and SMTP protocols to retrieve and send messages. When we install the email client, we would have to configure it with our email address, password and details of our email service provider. Here, by Email Clients I am referring to desktop based clients like Outlook, Thunderbird etc.  Websites like "gmail.com" ,    "yahoo.com" do not use IMAP or SMTP. They are based on HTTP.
+           
 - Email Server  
-    This is a software application that email service providers run to provide email functionality.  There are several important pieces to a email server.  The most important ones are,
+This is a software application that email service providers run to provide email functionality.  There are several important pieces to a email server.  The most important ones are,
+    
     - IMAP  Server
-          Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
+
+Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
         
     - SMTP Server
-        This part of the email server is responsible for the following use cases.
+       
+This part of the email server is responsible for the following use cases.
         - Receiving the messages that are being sent by its own users and deliver them to the specified recipients. 
         - Receive messages that are being sent to its users from other email servers.
         
@@ -53,13 +46,11 @@ Before we dive  into the details, let us look into some basic terminology relate
       
     SMTP servers listen on port 587/465 (for use case 1) and port 25 (for use case 2). After receiving a message SMTP servers usually hand it over to another component called MTA for delivery.
 
-
     - MTA
         Mail Transfer Agent (MTA) is the part of the email server that delivers the new messages to  the intended recipients. If the recipients are in the same email server, it just needs to persist the message on the recipients mailbox location. If the recipient is on another email server, it would need to connect to that email server and deliver the message.
     
 - MIME
-
-     Multi-purpose Internet Message Extension (MIME) is a standard that defines the format of an email message. As per this standard, a email message consists of a header part followed by a empty line which then followed by the body part.  The body part contains the actual content of the message.  The header part provides details like the from email address, subject , date etc.  One of the important headers is the "From" header. 
+ Multi-purpose Internet Message Extension (MIME) is a standard that defines the format of an email message. As per this standard, a email message consists of a header part followed by a empty line which then followed by the body part.  The body part contains the actual content of the message.  The header part provides details like the from email address, subject , date etc.  One of the important headers is the "From" header. 
                                                                                                     
 **A sample email message**                                      
 ```                        
@@ -74,10 +65,8 @@ Content-Transfer-Encoding: 7bit
 
 This is a sample email message. Email messages consists of header part and one or more body parts.       
 ``` 
-     
 
 - MX DNS Record
-
 "Mail Exchange" (MX) record is DNS record type that gives us the hostname  of the email server of a domain.  For example, if the MTA running in Gmail email server want to deliver a message to a recipient with email address "user@outlook.com", it needs to know the IP address of the "outlook.com" domain’s email server.  This information is published via DNS MX records.
  
 
