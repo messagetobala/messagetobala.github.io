@@ -11,7 +11,7 @@
 
 [DKIM](#dkim)
 
-[Can SPF and DKIM alone prevent Email Spoofing ?](#can-spf-and-dkim-alone-prevent-email-spoofing)
+[Can SPF and DKIM alone prevent Email Spoofing ?](#can-spf-and-dkim-alone-prevent-email-spoofing-)
 
 [DMARC](#dmarc)
 
