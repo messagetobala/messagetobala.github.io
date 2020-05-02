@@ -1,7 +1,6 @@
 # Salt, Pepper And Passwords
 
 [“Passwords” - Something which only the user should know](#passwords---something-which-only-the-user-should-know)
-
 [Threats and Requirements](#threats-and-requirements)
 
 [Encryption vs Hashing](#encryption-vs-hashing)
