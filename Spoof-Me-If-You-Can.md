@@ -41,13 +41,13 @@ This is a software application that email service providers run to provide email
         
 &nbsp;&nbsp;&nbsp;&nbsp;SMTP stands for Simple Mail Transfer Protocol and  defines the way on how new messages should be submitted to a SMTP server.  The protocol specifies a set of commands using which client can pass on information like the sender, recipients and the actual message.  After sending a command, the client should wait for a response from the server before sending the next command. Some important commands are,
           
-&nbsp;&nbsp;&nbsp;&nbsp;HELO/EHLO -  In this command the client specifies its hostname or ip address.
+&nbsp;&nbsp;&nbsp;&nbsp;**HELO/EHLO** -  In this command the client specifies its hostname or ip address.
           
-&nbsp;&nbsp;&nbsp;&nbsp;MAIL FROM - For specifying the sender email address.
+&nbsp;&nbsp;&nbsp;&nbsp;**MAIL FROM** - For specifying the sender email address.
             
-&nbsp;&nbsp;&nbsp;&nbsp;RCPT  TO - For specifying recipient email address. For each recipient the email client should send a separate RCPT TO command
+&nbsp;&nbsp;&nbsp;&nbsp;**RCPTTO** - For specifying recipient email address. For each recipient the email client should send a separate RCPT TO command
              
-&nbsp;&nbsp;&nbsp;&nbsp;DATA - This indicates that the client will next send the actual message in MIME format.
+&nbsp;&nbsp;&nbsp;&nbsp;**DATA** - This indicates that the client will next send the actual message in MIME format.
       
 &nbsp;&nbsp;&nbsp;&nbsp;SMTP servers listen on port 587/465 (for use case 1) and port 25 (for use case 2). After receiving a message SMTP servers usually hand it over to another component called MTA for delivery.
 
