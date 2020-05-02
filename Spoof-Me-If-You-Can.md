@@ -27,18 +27,19 @@ This is  a software application that users use to access email messages sent to 
 
 This is a software application that email service providers run to provide email functionality.  There are several important pieces to a email server.  The most important ones are,   
    
-i) IMAP Server
+&nbsp;&nbsp;&nbsp;&nbsp;i) IMAP Server
     
-Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
+&nbsp;&nbsp;&nbsp;&nbsp;Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
         
-ii) SMTP Server
+&nbsp;&nbsp;&nbsp;&nbsp;ii) SMTP Server
     
-This part of the email server is responsible for the following use cases.
+&nbsp;&nbsp;&nbsp;&nbsp;This part of the email server is responsible for the following use cases.
            
- &nbsp;&nbsp;&nbsp;&nbsp; Receiving the messages that are being sent by its own users and deliver them to the specified recipients. 
- &nbsp;&nbsp;&nbsp;&nbsp; Receive messages that are being sent to its users from other email servers.
+&nbsp;&nbsp;&nbsp;&nbsp;Receiving the messages that are being sent by its own users and deliver them to the specified recipients. 
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;Receive messages that are being sent to its users from other email servers.
         
-SMTP stands for Simple Mail Transfer Protocol and  defines the way on how new messages should be submitted to a SMTP server.  The protocol specifies a set of commands using which client can pass on information like the sender, recipients and the actual message.  After sending a command, the client should wait for a response from the server before sending the next command. Some important commands are,
+&nbsp;&nbsp;&nbsp;&nbsp;SMTP stands for Simple Mail Transfer Protocol and  defines the way on how new messages should be submitted to a SMTP server.  The protocol specifies a set of commands using which client can pass on information like the sender, recipients and the actual message.  After sending a command, the client should wait for a response from the server before sending the next command. Some important commands are,
           
 &nbsp;&nbsp;&nbsp;&nbsp;HELO/EHLO -  In this command the client specifies its hostname or ip address.
           
@@ -46,11 +47,11 @@ SMTP stands for Simple Mail Transfer Protocol and  defines the way on how new me
             
 &nbsp;&nbsp;&nbsp;&nbsp;RCPT  TO - For specifying recipient email address. For each recipient the email client should send a separate RCPT TO command
              
- &nbsp;&nbsp;&nbsp;&nbsp;DATA - This indicates that the client will next send the actual message in MIME format.
+&nbsp;&nbsp;&nbsp;&nbsp;DATA - This indicates that the client will next send the actual message in MIME format.
       
-      SMTP servers listen on port 587/465 (for use case 1) and port 25 (for use case 2). After receiving a message SMTP servers usually hand it over to another component called MTA for delivery.
+&nbsp;&nbsp;&nbsp;&nbsp;SMTP servers listen on port 587/465 (for use case 1) and port 25 (for use case 2). After receiving a message SMTP servers usually hand it over to another component called MTA for delivery.
 
-  iii) MTA
+&nbsp;&nbsp;&nbsp;&nbsp;iii) MTA
     
 Mail Transfer Agent (MTA) is the part of the email server that delivers the new messages to  the intended recipients. If the recipients are in the same email server, it just needs to persist the message on the recipients mailbox location. If the recipient is on another email server, it would need to connect to that email server and deliver the message.
     
