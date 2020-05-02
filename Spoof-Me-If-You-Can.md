@@ -377,12 +377,12 @@ Now to perform this validation, the email server of  "outlook.com" needs to know
 
 Before looking at  how the public keys are published via DNS TXT records, let us take a look at the "DKIM-Signature" header which is added to the message.  In the DKIM header example you can see the following fields,
 
- d -  Domain field. This indicates the domain of the sender.
- s  - This field is known as selector. We could think of like the "id" of the private key which was used to generate the signature.
- h -  This field gives us the list of headers which were included while computing the signature. The "From" header is the only required header that needs to be included while computing the signature. The sender can optionally include other fields.
- bh -  Body Hash. This is the hash of the message body.
- b  -  This is the digital signature which is nothing but the hash of the headers and body encrypted using a private key.
- a  -   Specifies the algorithm used for signing and calculating hash.    
+ *   d -  Domain field. This indicates the domain of the sender.
+ *   s  - This field is known as selector. We could think of like the "id" of the private key which was used to generate the signature.
+ *   h -  This field gives us the list of headers which were included while computing the signature. The "From" header is the only required header that needs to be included while computing the signature. The sender can optionally include other fields.
+ *   bh -  Body Hash. This is the hash of the message body.
+ *   b  -  This is the digital signature which is nothing but the hash of the headers and body encrypted using a private key.
+ *   a  -   Specifies the algorithm used for signing and calculating hash.    
 
 To fetch the public key, the receiver should query the TXT record for the string "<selector>._domainkey.<domain>". In our example it is "20161025._domainkey.gmail.com". If we query we get the following. Here the field "p" gives the public key corresponding to the private key used by the email server of "gmail.com" to sign the message.
 
