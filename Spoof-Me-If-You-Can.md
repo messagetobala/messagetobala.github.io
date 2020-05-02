@@ -25,8 +25,7 @@ This is  a software application that users use to access email messages sent to 
            
 - Email Server
 
-This is a software application that email service providers run to provide email functionality.  There are several important pieces to a email server.  The most important ones are,
-    
+This is a software application that email service providers run to provide email functionality.  There are several important pieces to a email server.  The most important ones are,   
     #### IMAP Server
     
     Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
