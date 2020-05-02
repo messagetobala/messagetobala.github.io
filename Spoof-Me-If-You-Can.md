@@ -27,13 +27,9 @@ This is  a software application that users use to access email messages sent to 
 
 This is a software application that email service providers run to provide email functionality.  There are several important pieces to a email server.  The most important ones are,
     
-    - IMAP  Server
-      
-      Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
+    - IMAP  Server: Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
         
-    - SMTP Server
-      
-      This part of the email server is responsible for the following use cases.
+    - SMTP Server: This part of the email server is responsible for the following use cases.
            
         - Receiving the messages that are being sent by its own users and deliver them to the specified recipients. 
         - Receive messages that are being sent to its users from other email servers.
