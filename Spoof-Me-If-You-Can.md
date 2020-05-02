@@ -205,7 +205,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit  /*Header finsishes*/
 
-This is a sample email message. Email messages consists of header part and one or more body parts.
+Stuck in airport. Lost my baggage. Need 2K urgently. Pls transfer to my a/c 12345
 .
 250 2.0.0 OK 
 QUIT
@@ -228,7 +228,7 @@ The actual content of the message in MIME format would be something like below.
 ```
 Date: Sat, 25 Apr 2020 17:15:29 +0530 (IST) 
 From: rbkrbkrbkrbk7@gmail.com 
-To: admin@testkanha2.onmicrosoft.com 
+To: user_bob@outlook.com 
 Message-ID: <459848100.0.1587815129693@[192.168.1.2]> 
 Subject: Spoof Me If You Can 
 MIME-Version: 1.0 
@@ -273,7 +273,7 @@ EHLO automation1.localdomain
 250 SMTPUTF8
 MAIL FROM:<rbkrbkrbkrbk7@gmail.com>
 250 2.1.0 Sender OK
-RCPT TO:<user_bob@testkanha2.onmicrosoft.com>
+RCPT TO:<user_bob@outlook.com>
 250 2.1.5 Recipient OK
 DATA
 354 Start mail input; end with <CRLF>.<CRLF>
@@ -433,14 +433,14 @@ We saw about SPF, DKIM and DMARC and the validations they perform.  But how does
 
 For a legitimate message the header would look like below,
 
-> Authentication-Results: **spf=pass** (sender IP is 209.85.160.195) smtp.mailfrom=gmail.com; testkanha2.onmicrosoft.com; 
+> Authentication-Results: **spf=pass** (sender IP is 209.85.160.195) smtp.mailfrom=gmail.com; outlook.com; 
 > **dkim=pass** (signature was verified) header.d=gmail.com;outlook.com; **dmarc=pass** action=none 
 > header.from=gmail.com;compauth=pass reason=100
 
 
 For a spoofed message the header would look like below,
 
-> Authentication-Results: **spf=softfail** (sender IP is 34.200.131.8) smtp.mailfrom=gmail.com; testkanha2.onmicrosoft.com; 
+> Authentication-Results: **spf=softfail** (sender IP is 34.200.131.8) smtp.mailfrom=gmail.com; outlook.com; 
 > **dkim=none** (message not signed) header.d=none;outlook.com; **dmarc=fail** action=none 
 > header.from=gmail.com;compauth=fail reason=001
 
