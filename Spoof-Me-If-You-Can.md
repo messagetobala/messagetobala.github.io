@@ -432,12 +432,14 @@ Here,
 We saw about SPF, DKIM and DMARC and the validations they perform.  But how does a user reading a email message  in a email client know whether the message he is reading has passed SPF, DKIM and DMARC validations or not ?   The results of all these validations are included in the message in a special header  called "Authentication-Results". 
 
 For a legitimate message the header would look like below,
-
+```
 Authentication-Results: **spf=pass** (sender IP is 209.85.160.195) smtp.mailfrom=gmail.com; testkanha2.onmicrosoft.com; **dkim=pass** (signature was verified) header.d=gmail.com;testkanha2.onmicrosoft.com; **dmarc=pass** action=none header.from=gmail.com;compauth=pass reason=100
+```
 
 For a spoofed message the header would look like below,
-
+```
 Authentication-Results: **spf=softfail** (sender IP is 34.200.131.8) smtp.mailfrom=gmail.com; testkanha2.onmicrosoft.com; **dkim=none** (message not signed) header.d=none;testkanha2.onmicrosoft.com; **dmarc=fail** action=none header.from=gmail.com;compauth=fail reason=001
+```
 
 In all  email clients there would be a way to look at the headers of the message. For example in gmail you can see the steps [here](https://support.google.com/mail/answer/29436?hl=en). For Outlook the instructions are available [here](https://support.office.com/en-us/article/view-internet-message-headers-in-outlook-cd039382-dc6e-4264-ac74-c048563d212c). Unfortunately , there is no better way to look at the authentication results. 
 
