@@ -27,18 +27,18 @@ This is  a software application that users use to access email messages sent to 
 
 This is a software application that email service providers run to provide email functionality.  There are several important pieces to a email server.  The most important ones are,   
    
-   i) IMAP Server
+i) IMAP Server
     
-    Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
+Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
         
-  ii) SMTP Server
+ii) SMTP Server
     
-    This part of the email server is responsible for the following use cases.
+This part of the email server is responsible for the following use cases.
            
         Receiving the messages that are being sent by its own users and deliver them to the specified recipients. 
         Receive messages that are being sent to its users from other email servers.
         
-     SMTP stands for Simple Mail Transfer Protocol and  defines the way on how new messages should be submitted to a SMTP server.  The protocol specifies a set of commands using which client can pass on information like the sender, recipients and the actual message.  After sending a command, the client should wait for a response from the server before sending the next command. Some important commands are,
+SMTP stands for Simple Mail Transfer Protocol and  defines the way on how new messages should be submitted to a SMTP server.  The protocol specifies a set of commands using which client can pass on information like the sender, recipients and the actual message.  After sending a command, the client should wait for a response from the server before sending the next command. Some important commands are,
           
              HELO/EHLO -  In this command the client specifies its hostname or ip address.
           
