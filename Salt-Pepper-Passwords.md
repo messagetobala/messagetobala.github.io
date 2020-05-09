@@ -1,8 +1,3 @@
----
-layout: default
-title: "Unix pipes"
-permalink: /unix-pipes/
----
 
 # Salt, Pepper And Passwords
 
