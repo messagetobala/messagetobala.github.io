@@ -2,9 +2,6 @@
 layout: default
 title: "Unix pipes"
 permalink: /unix-pipes/
-categories:
-  - Jekyll
-comments_id: 1
 ---
 
 # Understanding pipes in Unix with a sample implementation
