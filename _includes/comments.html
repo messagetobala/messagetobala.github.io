@@ -22,21 +22,17 @@ request.onload = function() {
 function createCommentEl( response ) {
 	let user = document.createElement( 'a' );
 	user.setAttribute( 'href', response.user.url );
-	user.classList.add( 'user' );
 
 	let userAvatar = document.createElement( 'img' );
-	userAvatar.classList.add( 'avatar' );
 	userAvatar.setAttribute( 'src', response.user.avatar_url );
-
+	userAvatar.setAttribute( 'style', 'width:64px;height:64px;');
 	user.appendChild( userAvatar );
 
 	let commentLink = document.createElement( 'a' );
 	commentLink.setAttribute( 'href', response.html_url );
-	commentLink.classList.add( 'comment-url' );
 	commentLink.innerHTML = '#' + response.id + ' - ' + response.created_at;
 
 	let commentContents = document.createElement( 'div' );
-	commentContents.classList.add( 'comment-content' );
 	commentContents.innerHTML = response.body;
 
 	let comment = document.createElement( 'li' );
