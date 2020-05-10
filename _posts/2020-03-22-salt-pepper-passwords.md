@@ -1,6 +1,9 @@
-
-# Salt, Pepper And Passwords
-
+---
+layout: post
+title:  "Salt, Pepper And Passwords"
+date:   2020-03-22 13:19:16 +0530
+categories: application-security
+---
 [“Passwords” - Something which only the user should know](#passwords---something-which-only-the-user-should-know)
 
 [Threats and Requirements](#threats-and-requirements)

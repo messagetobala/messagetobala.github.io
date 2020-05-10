@@ -1,4 +1,9 @@
-# Spoof Me If You Can
+---
+layout: post
+title:  "Spoof Me If You Can"
+date:   2020-03-28 13:19:16 +0530
+categories: email
+---
 [Email](#email)
 
 [Email Spoofing](#email-spoofing)

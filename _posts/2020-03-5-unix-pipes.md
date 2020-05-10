@@ -1,11 +1,9 @@
 ---
-layout: default
-title: "Unix pipes"
-permalink: /unix-pipes/
+layout: post
+title:  "Understanding pipes in Unix with a sample implementation"
+date:   2020-03-05 13:19:16 +0530
+categories: unix
 ---
-
-# Understanding pipes in Unix with a sample implementation
-
 [Do one thing well](#do-one-thing-well)
 
 [Everything is a file](#everything-is-a-file)

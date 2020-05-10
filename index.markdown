@@ -4,3 +4,5 @@
 
 layout: home
 ---
+
+A collection of articles where I share my thoughts on interesting programming topics.
