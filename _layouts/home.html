@@ -58,4 +58,8 @@ layout: default
 
   {%- endif -%}
 
+  {%- if page.comments_id -%}
+		{%- include comments.html -%}
+	{%- endif -%} 
+  
 </div>
