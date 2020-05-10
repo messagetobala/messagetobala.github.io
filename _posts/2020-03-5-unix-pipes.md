@@ -3,6 +3,7 @@ layout: post
 title:  "Understanding pipes in Unix with a sample implementation"
 date:   2020-03-05 13:19:16 +0530
 categories: unix
+excerpt: Explains how command pipeline works in Unix. We will look at the concepts behind it and also write our own implementation.
 ---
 [Do one thing well](#do-one-thing-well)
 

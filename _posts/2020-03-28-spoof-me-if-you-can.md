@@ -3,6 +3,7 @@ layout: post
 title:  "Spoof Me If You Can"
 date:   2020-03-28 13:19:16 +0530
 categories: email
+excerpt: In this article, we will look at "What Email Spoofing is ?" and the preventive measures like SPF, DKIM and DMARC that were introduced to prevennt it.
 ---
 [Email](#email)
 
