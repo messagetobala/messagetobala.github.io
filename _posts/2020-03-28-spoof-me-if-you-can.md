@@ -3,7 +3,7 @@ layout: post
 title:  "Spoof Me If You Can"
 date:   2020-03-28 13:19:16 +0530
 categories: email
-excerpt: In this article, we will look at "What Email Spoofing is ?" and the preventive measures like SPF, DKIM and DMARC that were introduced to prevennt it.
+excerpt: In this article, we will look at <em>"What Email Spoofing is ?"</em> and the preventive measures like SPF, DKIM and DMARC that were introduced to prevennt it.
 permalink: /spoof-me-if-you-can.html
 comments_id: 3
 ---
@@ -35,7 +35,7 @@ Unfortunately the popularity of Email has also made it,  the number one preferre
 
 ## Email Spoofing
 
-"Email Spoofing" is  a technique where hackers/spammers send specially crafted email messages to unsuspecting persons.  When the recipient of the message opens it for reading, it would look like the message has come from an email address of a person or organization know to them, thus making the recipient to trust the contents of the message. Often these messages would have some malicious attachments, downloading which would allow the hacker to gain control over the recipient’s system. Or, the message may request the recipient  to share some sensitive information by replying to the email (The reply could made to be delivered to an email address that is different from the ‘From’ email address) or  by clicking on a website link included in the message.
+"Email Spoofing" is  a technique where hackers/spammers send specially crafted email messages to unsuspecting persons.  When the recipient of the message opens it for reading, it would look like the message has come from an email address of a person or organization known to them, thus making the recipient to trust the contents of the message. Often these messages would have some malicious attachments, downloading which would allow the hacker to gain control over the recipient’s system. Or, the message may request the recipient  to share some sensitive information by replying to the email (The reply could made to be delivered to an email address that is different from the ‘From’ email address) or  by clicking on a website link included in the message.
 
 ## Some basic terms and concepts
 
@@ -53,11 +53,11 @@ This is  a software application that users use to access email messages sent to 
 
 This is a software application that email service providers run to provide email functionality.  There are several important pieces to a email server.  The most important ones are,   
    
-&nbsp;&nbsp;&nbsp;&nbsp;i) IMAP Server
+&nbsp;&nbsp;&nbsp;&nbsp;1. IMAP Server
     
-&nbsp;&nbsp;&nbsp;&nbsp;Internet Message Access Protocol (IMAP) protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
+&nbsp;&nbsp;&nbsp;&nbsp;**Internet Message Access Protocol (IMAP)** protocol defines how email clients can connect to a email server and  retrieve the email messages received. Every email server should have an implementation of this protocol, so that email clients can connect to it and download email messages. IMAP servers usually listen on port 143 or 993 for incoming requests.
         
-&nbsp;&nbsp;&nbsp;&nbsp;ii) SMTP Server
+&nbsp;&nbsp;&nbsp;&nbsp;2. SMTP Server
     
 &nbsp;&nbsp;&nbsp;&nbsp;This part of the email server is responsible for the following use cases.
            
@@ -65,11 +65,11 @@ This is a software application that email service providers run to provide email
  
  &nbsp;&nbsp;&nbsp;&nbsp;Receive messages that are being sent to its users from other email servers.
         
-&nbsp;&nbsp;&nbsp;&nbsp;SMTP stands for Simple Mail Transfer Protocol and  defines the way on how new messages should be submitted to a SMTP server.  The protocol specifies a set of commands using which client can pass on information like the sender, recipients and the actual message.  After sending a command, the client should wait for a response from the server before sending the next command. Some important commands are,
+&nbsp;&nbsp;&nbsp;&nbsp;SMTP stands for **Simple Mail Transfer Protocol** and  defines the way on how new messages should be submitted to a SMTP server.  The protocol specifies a set of commands using which client can pass on information like the sender, recipients and the actual message.  After sending a command, the client should wait for a response from the server before sending the next command. Some important commands are,
           
 &nbsp;&nbsp;&nbsp;&nbsp;**HELO/EHLO** -  In this command the client specifies its hostname or ip address.
           
-&nbsp;&nbsp;&nbsp;&nbsp;**MAIL FROM** - For specifying the sender email address.
+&nbsp;&nbsp;&nbsp;&nbsp;**MAIL FROM** - For specifying the sender email address. The email address specified in this command is also known as "Envelope From".
             
 &nbsp;&nbsp;&nbsp;&nbsp;**RCPTTO** - For specifying recipient email address. For each recipient the email client should send a separate RCPT TO command
              
@@ -77,13 +77,13 @@ This is a software application that email service providers run to provide email
       
 &nbsp;&nbsp;&nbsp;&nbsp;SMTP servers listen on port 587/465 (for use case 1) and port 25 (for use case 2). After receiving a message SMTP servers usually hand it over to another component called MTA for delivery.
 
-&nbsp;&nbsp;&nbsp;&nbsp;iii) MTA
+&nbsp;&nbsp;&nbsp;&nbsp;3. MTA
     
-Mail Transfer Agent (MTA) is the part of the email server that delivers the new messages to  the intended recipients. If the recipients are in the same email server, it just needs to persist the message on the recipients mailbox location. If the recipient is on another email server, it would need to connect to that email server and deliver the message.
+**Mail Transfer Agent (MTA)** is the part of the email server that delivers the new messages to  the intended recipients. If the recipients are in the same email server, it just needs to persist the message on the recipients mailbox location. If the recipient is on another email server, it would need to connect to that email server and deliver the message.
     
 - MIME
 
-Multi-purpose Internet Message Extension (MIME) is a standard that defines the format of an email message. As per this standard, a email message consists of a header part followed by a empty line which then followed by the body part.  The body part contains the actual content of the message.  The header part provides details like the from email address, subject , date etc.  One of the important headers is the "From" header. 
+**Multi-purpose Internet Message Extension (MIME)** is a standard that defines the format of an email message. As per this standard, a email message consists of a header part followed by a empty line which then followed by the body part.  The body part contains the actual content of the message.  The header part provides details like the from email address, subject , date etc.  One of the important headers is the "From" header which should contain the email address of the sender. The email address in this header is known as "Body From".
                                                                                                     
 #### A sample email message                                      
 ```                        
@@ -100,7 +100,8 @@ This is a sample email message. Email messages consists of header part and one o
 ``` 
 
 - MX DNS Record
-"Mail Exchange" (MX) record is DNS record type that gives us the hostname  of the email server of a domain.  For example, if the MTA running in Gmail email server want to deliver a message to a recipient with email address "user@outlook.com", it needs to know the IP address of the "outlook.com" domain’s email server.  This information is published via DNS MX records.
+
+**"Mail Exchanger" (MX)** record is a DNS record type that gives us the hostname  of the email server of a domain.  For example, if the MTA running in Gmail email server want to deliver a message to a recipient with email address "user@outlook.com", it needs to know the IP address of the "outlook.com" domain’s email server.  This information is published via DNS MX records.
  
 
 #### MX record of outlook.com domain obtained via dig command
@@ -131,9 +132,9 @@ When Alice run’s the above command the following things happen,
 
 Email Client connects to Gmail SMTP server,  uses the  credentials provided to authenticate and submits the message  for delivery using SMTP protocol. 
 
-The SMTP commands exchanged would look like below. Please see my comments included between /* and */
+The SMTP commands exchanged would look like below. Please see the comments included between /* and */
 
-```
+```java
 220 smtp.gmail.com ESMTP n13sm7609611qtf.15 - gsmtp
 EHLO automation1.localdomain
 250-smtp.gmail.com at your service, [34.200.131.8]
@@ -181,7 +182,7 @@ QUIT
 
 The MTA in Gmail’s email server picks up the message , connects to the SMTP  server of the  domain "outlook.com" on port 25 and delivers the message. The SMTP exchange between MTA in Gmail’s email server and the SMTP server of "outlook.com" would be as below.
 
-```
+```java
 EHLO mail-pl1-f196.google.com
 250-BO1IND01FT010.mail.protection.outlook.com Microsoft ESMTP MAIL Service ready at Sat, 25 Apr 2020 11:54:45 +0000 at your service
 250-BO1IND01FT010.mail.protection.outlook.com Hello [182.65.14.29]
@@ -222,7 +223,7 @@ QUIT
 
 - Step 3
 
-The Email  Client in my friends laptop uses IMAP to fetch the message and displays it as soon as it arrives. 
+The Email  Client Bob's friends laptop uses IMAP to fetch the message and displays it as soon as it arrives. 
      
 Below is a screen shot of how the message would be  displayed in  Bob’s email client.
       
@@ -243,7 +244,8 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii 
 Content-Transfer-Encoding: 7bit
 
-This is a sample email message. Email messages consists of header part and one or more body parts.
+This is a sample email message. Email messages consists of header part 
+and one or more body parts.
 ```
       
  Now consider the difference between Step 1 and Step 2. Both uses SMTP. The difference is, in Step 1,  the email client uses credentials  of Alice to authenticate with the Gmail Server. The Gmail Server validates the password sent. It knows for sure that message is coming from Alice. So it accepts the message for delivery.
@@ -253,6 +255,7 @@ In Step 2, there is no authentication.  When the email server of the domain "out
 So, it is possible for any one to connect to "outlook.com" email server and submit a message that has "user_alice@gmail.com" in the "MAIL FROM" smtp command and the "FROM" MIME header. 
 
 #### A SWAKS command to send messages without authencation
+Any one can run the below command 
 ```
 >./swaks --server outlook-com.olc.protection.outlook.com:25 \
 --to user_bob@outlook.com --from "user_alice@gmail.com" \
@@ -261,14 +264,14 @@ So, it is possible for any one to connect to "outlook.com" email server and subm
 --body "Stuck in airport. Lost my baggage. Need 2K urgently. Pls transfer to my a/c 12345" 
 --tls
 ```
-Any one can run the above  command and  Bob would see a message like below in his inbox exactly like the first message.
+ And  Bob would see a message like below in his inbox, which is  exactly like the first message sent by Alice.
 
 
 ![](https://paper-attachments.dropbox.com/s_22872381B5E0C682806D56C31A547CD4B1E74782917704884319BBD6C1B203D3_1588310190961_image.png)
 
 
 #### SMTP transcript of above command
-```
+```java
 EHLO automation1.localdomain
 250-BO1IND01FT005.mail.protection.outlook.com Hello [34.200.131.8]
 250-SIZE 157286400
@@ -286,7 +289,7 @@ RCPT TO:<user_bob@outlook.com>
 DATA
 354 Start mail input; end with <CRLF>.<CRLF>
 Date: Sun, 26 Apr 2020 06:45:12 +0000
-To: user_bob@testkanha2.onmicrosoft.com
+To: user_bob@outlook.onmicrosoft.com
 From: User Alice<user_alice@gmail.com>
 Subject: Need Urgent Help
 Message-Id: <20200426064512.006078@automation1.localdomain>
@@ -300,17 +303,19 @@ Stuck in airport. Lost my baggage. Need 2K urgently. Pls transfer to my a/c 1234
 QUIT
 ```    
 
-Now what should Bob do on seeing the message?
 
-If he transfers the money and the message was indeed sent by Alice, he is the best friend any one can have. But, if he transfers the money and the message was not sent by Alice, he is a victim of "Email Spoofing"   
+> **Now what should Bob do on seeing the message?**
+
+
+If he transfers the money and the message was indeed sent by Alice, he is the best friend any one can have. But, if he transfers the money and the message was not sent by Alice, he becomes a victim of "Email Spoofing"   
 
 ## SPF
 
-How can email service providers protect users like "Bob" from "Email Spoofing".  In our example above, at Step 2, we need a way for "outlook.com" email server to find out if the message being submitted is actually from "user_alice@gmail.com".   But authenticating users in "gmail.com" domain is not possible for the "outlook.com" SMTP server.  
+How can email service providers protect users like "Bob" from "Email Spoofing".  In our example above, at Step 2, we need a way for "outlook.com" email server to find out if the message being submitted is actually from "user_alice@gmail.com".   But authenticating users in "gmail.com" domain is not possible for the "outlook.com" email server.  
 
 The next best thing that can be done is checking if the message is indeed being submitted  by email server of "gmail.com" .  In our example,  when "outlook.com" email server, is processing the incoming message, as soon as it receives the "MAIL FROM" command, it can find out the "domain" from the email address and check if the IP address from where the message is submitted belongs to the domain("gmail.com" in our example) mentioned in the "MAIL FROM" command.
 
-This approach is known as "Sender Policy Framework (SPF)". It requires that  for every domain they support, email service providers list the IP addresses from which they will deliver email messages to external recipients  via DNS TXT records.   This allows a email server to take the domain from the "MAIL FROM" command,  get the list of IP’s from which messages can be submitted for this domain and check if the IP from which the message is being submitted is in that list. If the message is not in the list, then something is wrong and it can take a corresponding action like moving the message to "Spam" folder.
+This approach is known as **"Sender Policy Framework (SPF)"**. It requires that  for every domain they support, email service providers list the IP addresses from which they will deliver email messages to external recipients  via DNS TXT records.   This allows a email server to take the domain from the "MAIL FROM" command,  get the list of IP’s from which messages can be submitted for this domain and check if the IP from which the message is being submitted is in that list. If the message is not in the list, then something is wrong and it can take a corresponding action like moving the message to "Spam" folder.
 
 
 ### SPF TXT records
@@ -357,7 +362,7 @@ For example, in the SPF record of "_spf.gmail.com" we see the string  "~all" at 
 
 ## DKIM
 
-In SPF we are trying to validate the sender based on IP address. "DomainKeys Identified Mail (DKIM)" provides an alternate method to validate the senders based on digital signature.  Digital signatures is based on asymmetric cryptography and it not only allows the receiver of the message to validate the sender, it also allows the receiver to validate that the message was not tampered while it was in transit. When digital signatures are used for message exchanges, it usually consists of the following steps.
+In SPF, we are trying to validate the sender based on IP address. **"DomainKeys Identified Mail (DKIM)"** provides an alternate method to validate the senders based on digital signature.  Digital signatures is based on asymmetric cryptography and it not only allows the receiver of the message to validate the sender, it also allows the receiver to validate that the message was not tampered while it was in transit. When digital signatures are used for message exchanges, it usually consists of the following steps.
 
 
 - The sender calculates the hash of the message content he is going to send.
@@ -365,7 +370,7 @@ In SPF we are trying to validate the sender based on IP address. "DomainKeys Ide
 - The receiver fetches the public key of the sender and decrypts the encrypted hash.
 - The receiver then calculates the hash of the message contents. Now the hash calculated by receiver should match the hash obtained by decrypting the encrypted hash. If it matches, the receiver can be sure about the authenticity of the sender and the contents of the message. 
 
-Let us go back to our example and see how DKIM uses digital signatures in email message exchanges.   The email server of "gmail.com" before connecting to the email server of "outlook.com",  would calculate the digital signature of the message.  It takes the content of the "From" MIME header and the body of the message, calculates the hash and encrypts it using its private key. It then includes this encrypted hash in a special header called "DKIM-Signature" and delivers the message to the email server of "outlook.com"
+Let us go back to our example and see how DKIM uses digital signatures in email message exchanges.   The email server of "gmail.com" before connecting to the email server of "outlook.com",  would calculate the digital signature of the message.  It takes the content of the "From" MIME header and the body of the message, calculates the hash and encrypts it using its private key. It then includes this encrypted hash in a special header called **"DKIM-Signature"** and delivers the message to the email server of "outlook.com"
 
 So if Alice sends a message to Bob, the message received by Bob’s email server would have an header like below.
 
@@ -383,16 +388,16 @@ Now to perform this validation, the email server of  "outlook.com" needs to know
 
 ### DKIM TXT Records
 
-Before looking at  how the public keys are published via DNS TXT records, let us take a look at the "DKIM-Signature" header which is added to the message.  In the DKIM header example you can see the following fields,
+Before looking at  how the public keys are published via DNS TXT records, let us take a look at the "DKIM-Signature" header which is added to the message.  In the DKIM header example provided above you can see the following fields,
 
  *   d -  Domain field. This indicates the domain of the sender.
  *   s  - This field is known as selector. We could think of like the "id" of the private key which was used to generate the signature.
- *   h -  This field gives us the list of headers which were included while computing the signature. The "From" header is the only required header that needs to be included while computing the signature. The sender can optionally include other fields.
+ *   h -  This field gives us the list of headers which were included while computing the signature. The "From" header is the only required header that needs to be included while computing the signature. The sender can optionally include other header fields.
  *   bh -  Body Hash. This is the hash of the message body.
  *   b  -  This is the digital signature which is nothing but the hash of the headers and body encrypted using a private key.
  *   a  -   Specifies the algorithm used for signing and calculating hash.    
 
-To fetch the public key, the receiver should query the TXT record for the string "<selector>._domainkey.<domain>". In our example it is "20161025._domainkey.gmail.com". If we query we get the following. Here the field "p" gives the public key corresponding to the private key used by the email server of "gmail.com" to sign the message.
+To fetch the public key, the receiver should query the TXT record for the string **"&lt;selector&gt;._domainkey.&lt;domain&gt;"**. In our example it is "20161025._domainkey.gmail.com". If we query we get the following. Here the field "p" gives the public key corresponding to the private key used by the email server of "gmail.com" to sign the message.
 
 ```
 #>dig 20161025._domainkey.gmail.com TXT +short
@@ -401,9 +406,13 @@ To fetch the public key, the receiver should query the TXT record for the string
 
 ## Can SPF and DKIM alone prevent Email Spoofing ?
 
-If a email server performs SPF and DKIM validation, can it prevent all cases of email spoofing and protect it users?   In our example,  when "outlook.com" email server receives a message where the "MAIL FROM" command says "user_alice@gmail.com", it looks up the SPF records of "gmail.com", validate the IP and is going to allow the message only if the IP is in the list of IP’s published by Gmail.  So can we say, "Yes, SPF prevents Email Spoofing".  Unfortunately, the answer is "NO". 
+If a email server performs SPF and DKIM validation, can it prevent all cases of email spoofing and protect it users?   In our example,  when "outlook.com" email server receives a message where the "MAIL FROM" command says "user_alice@gmail.com", it looks up the SPF records of "gmail.com", validate the IP and is going to allow the message only if the IP is in the list of IP’s published by Gmail.  
 
-To bypass SPF, a spammer can simply buy a domain say "spammer.com", set up SPF records for that domain,  use the address "user_alice@spammer.com" in the "MAIL FROM" command and send a message (which has the  "From" MIME header as "user_alice@gmail.com") from an IP address that is listed in the SPF record of domain "spammer.com". In this case ,  "outlook.com" email server receives a message where the "MAIL FROM" command says "user_alice@spammer.com". It looks up the SPF record of "spammer.com", sees that the IP from where the message is coming is listed in the SPF record and is going to treat the message as a legitimate one ad deliver it to Bob’s inbox.
+> So can we say,  "Yes, SPF prevents Email Spoofing".  
+>
+> Unfortunately, the answer is "NO". 
+
+To bypass SPF, a spammer can simply buy a domain say "spammer.com", set up SPF records for that domain,  use the address "user_alice@spammer.com" in the "MAIL FROM" command and send a message (which has the  "From" MIME header as "user_alice@gmail.com") from an IP address that is listed in the SPF record of domain "spammer.com". In this case ,  "outlook.com" email server receives a message where the "MAIL FROM" command says "user_alice@spammer.com". It looks up the SPF record of "spammer.com", sees that the IP from where the message is coming is listed in the SPF record and is going to treat the message as a legitimate one and deliver it to Bob’s inbox.
 
 Similarly, to bypass DKIM, a spammer can publish public keys for his domain "spammer.com" and send a spoofed message that will have "From" MIME header as "user_alice@gmail.com" with a valid "DKIM-Signature" header.  He just needs to set the domain field in the DKIM signature to his domain "spammer.com".
 
@@ -413,15 +422,15 @@ In case of DKIM, the problem is because the domain used to look up the public ke
 
 ## DMARC
 
-Domain Based Message Authentication, Reporting and Conformance (DMARC) protocol builds on top of SPF and DKIM and plugs the loophole with SPF and DKIM that we saw in previous section.
-As per DMARC, for a message to be considered legitimate it needs to satisfy at least one of the two conditions listed below,
+**Domain Based Message Authentication, Reporting and Conformance (DMARC)** protocol builds on top of SPF and DKIM and plugs the loophole with SPF and DKIM that we saw in previous section.
+As per DMARC, for a message to be considered legitimate **it needs to satisfy at least one** of the two conditions listed below,
 
-- The message should pass SPF validation and the domain of the email address in "MAIL FROM" SMTP command should match the domain of the email address in "FROM" MIME header.
-- The message should pass DKIM validation and the domain mentioned in the DKIM-Signature header should match the domain of the email address in "FROM" MIME header.
+>- The message should pass SPF validation and the domain of the email address in "MAIL FROM" SMTP command should either exactly match the domain of the email address in "FROM" MIME header (Strict alignment check)  or must be a parent domain of the email address in "FROM" MIME header (Relaxed alignment check).
+>- The message should pass DKIM validation and the domain mentioned in the DKIM-Signature header should either exactly match the domain of the email address in "FROM" MIME header (Strict alignment check) or must be a parent domain of the email address in "FROM" MIME header (Relaxed alignment check).
 
-Now there is no way for a spammer to send a message to Bob pretending to be Alice. Because the domain in the "FROM" header needs to match the domain in "MAIL FROM" or  the domain in the "DKIM-Signature" header both of which can only be the spammer’s own domain "spammer.com". So if he wants to send a message to Bob, the only way is to set the "From" MIME header to an email address in "spammer.com". 
+With this additional condition, there is no way for a spammer to send a message to Bob pretending to be Alice. Because the domain in the "FROM" header needs to match the domain in "MAIL FROM" or  the domain in the "DKIM-Signature" header both of which can only be the spammer’s own domain "spammer.com". So if he wants to send a message to Bob, the only way is to set the "From" MIME header to an email address in "spammer.com". 
 
-A domain can indicate whether it wants the email servers to perform DMARC validation for messages supposedly coming from its email servers via DNS TXT records. To look up the DMARC TXT record of a domain we need to use the string "_dmarc.<domain>" . 
+A domain can indicate whether it wants the email servers to perform DMARC validation for messages supposedly coming from its email servers via DNS TXT records. To look up the DMARC TXT record of a domain we need to use the string **"_dmarc.&lt;domain&gt;"** . 
 
 For example, the DMARC record of "gmail.com" looks like below.
 
@@ -430,14 +439,24 @@ For example, the DMARC record of "gmail.com" looks like below.
 "v=DMARC1; p=none; rua=mailto:mailauth-reports@google.com"
 ```
 
-Here,
-   p  - Indicates the action that the receiving email server should take when DMARC validation fails. It can have the following values none (no action), reject  and quarantine. (It is a surprise that gmail.com has set the action has "none" and not "reject")
+Here the field,
+ 
+   - v  - Identifies the TXT record as DMARC record. 
    
-  rua - Indicates  an email address to which an aggregate report about the result of every DMARC validation done for that domain can be sent.  In the example above, "gmail.com" is requesting other email service providers to send an aggregate report to the address "mailauth-reports@google.com". The report will have the DMARC validation results for every message received from "gmail.com" over a period of time.  This will help "gmail.com" to see if it sending emails from any IP address that it has not included in the SPF record and correct it.
+   - p  - Indicates the action that the receiving email server should take when DMARC validation fails. It can have the following values "none" (no action), "reject"  and "quarantine". **(It is a surprise that gmail.com has set the action has "none" and not "reject")**
+   
+   - rua - Indicates  an email address to which an aggregate report about the result of every DMARC validation done for that domain can be sent. In the example above, "gmail.com" is requesting other email service providers to send an aggregate report to the address "mailauth-reports@google.com". The report will have the DMARC validation results for every message received from "gmail.com" over a period of time.  This will help "gmail.com" to see if it sending emails from any IP address that it has not included in the SPF record and correct it.
+
+Two other important fields in a DKIM record are,
+
+  - adkim - Indicates the the type of DKIM alignment check to perform. It can either be "r" (Relaxed alignment check) or "s" (Strict alignment check). Defaults to "s".
+  - aspf -  Indicates the the type of SPF alignment check to perform. It can either be "r" or "s" . Defaults to "s".
 
 ## Viewing the results of SPF, DKIM and DMARC
 
-We saw about SPF, DKIM and DMARC and the validations they perform.  But how does a user reading a email message  in a email client know whether the message he is reading has passed SPF, DKIM and DMARC validations or not ?   The results of all these validations are included in the message in a special header  called "Authentication-Results". 
+We saw about SPF, DKIM and DMARC and the validations they perform.  But how does a user reading a email message  in a email client know whether the message he is reading has passed SPF, DKIM and DMARC validations or not ?   
+
+The results of all these validations are included in the message in a special header  called **"Authentication-Results"**. 
 
 For a legitimate message the header would look like below,
 
