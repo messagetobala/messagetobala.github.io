@@ -1,8 +1,6 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
 layout: home
+comments_id: 4
 ---
 
-A collection of articles where I share my thoughts on interesting programming topics.
+My personal blog, where I share my thoughts on interesting programming topics that I have come across. Feel free to share your comments, corrections, suggesstions via the "Comments" section.
