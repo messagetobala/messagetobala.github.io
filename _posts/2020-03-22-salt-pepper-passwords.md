@@ -4,6 +4,7 @@ title:  "Salt, Pepper And Passwords"
 date:   2020-03-22 13:19:16 +0530
 categories: application-security
 excerpt: About the best practises that needs to followed when storing passwords and other application secrets.
+permalink: /salt-pepper-and-passwords.html
 comments_id: 2
 ---
 [“Passwords” - Something which only the user should know](#passwords---something-which-only-the-user-should-know)
