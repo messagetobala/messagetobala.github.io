@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd        
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+ 
+ 	<context:component-scan base-package="org.bala.historicalstatement" />	
+		
+	<bean id="rdbmsHost" name="rdbsmHost" class="java.lang.String">
+       <constructor-arg value="localhost"/>
+	</bean>
+
+	<bean id="rdbmsPort" name="rdbmsPort" class="java.lang.String">
+       <constructor-arg value="3308"/>
+	</bean>
+	
+	<bean id="rdbmsUser" name="rdbmsUser" class="java.lang.String">
+       <constructor-arg value="root"/>
+	</bean>
+	
+	<bean id="rdbmsPassword" name="rdbmsPassword" class="java.lang.String">
+       <constructor-arg value="Bala@123"/>
+	</bean>
+				
+	<bean id="redisHost" name="redisHost" class="java.lang.String">
+       <constructor-arg value="localhost"/>
+	</bean>
+			
+	<bean id="redisPort" name="redisPort" class="java.lang.String">
+       <constructor-arg value="6379"/>
+	</bean>
+				
+	<bean id="cf" class="org.bala.historicalstatement.ComponentFactory">
+	</bean>   
+	
+	<bean id="dataSource"
+    	factory-bean="cf"
+    	factory-method="getDataSource"/>	
+  	
+  	<bean id="rdbmsDao" name="rdbmsDao" class="org.bala.historicalstatement.dao.RDBMSHistoricalStatementDAOImpl" />
+  	
+ 	<tx:annotation-driven  transaction-manager="txManager" />
+	    	   		  
+	<bean id="txManager" 
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref= "dataSource" />
+	</bean>
+	
+	 <bean id="rdbsmWorkerV1" class="org.bala.historicalstatement.HistoricalStatementWorker_v1"></bean>
+	 
+	  <bean id="rdbsmWorkerV2" class="org.bala.historicalstatement.HistoricalStatementWorker_v2"></bean>
+
+	 <bean id="requestProcessorV1" class="org.bala.historicalstatement.RDBMSHistoricalStatementProcessor_v1"></bean>
+  	   		   
+	 <bean id="requestProcessorV2" class="org.bala.historicalstatement.RDBMSHistoricalStatementProcessor_v2"></bean>	
+	 
+	 <bean id="redisWorker" class="org.bala.historicalstatement.RedisHistoricalStatementWorker"></bean>
+	 
+	 <bean id="redisRequestProcessor" class="org.bala.historicalstatement.RedisHistoricalStatementProcessor"></bean>
+</beans>
