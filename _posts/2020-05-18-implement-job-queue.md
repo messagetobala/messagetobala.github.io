@@ -5,8 +5,17 @@ date:   2020-05-18 13:19:16 +0530
 categories: email
 excerpt: In this article, we will look at ways to implement the "Job Queue" pattern, using a RDBMS (MySQL) and Redis,  and look at the "Pros" and "Cons" of both the methods. 
 permalink: /job-queue.html
-comments_id: 3
+comments_id: 5
 ---
+[Introduction](#introduction)
+
+[RDBMS Method 1 - Using "status" column for locking](#rdbms-method-1---using-status-column-for-locking)
+
+[RDBMS Method 2 - Using "SKIP LOCKED"](#rdbms-method-2---using-skip-locked)
+
+[Using Redis as a queue](#using-redis-as-a-queue)
+
+[RDBMS vs Redis. Which one to choose for a job queue?](#rdbms-vs-redis-which-one-to-choose-for-a-job-queue)
 
 # Introduction
 
@@ -29,9 +38,9 @@ If the work to be done is not dependent on any other external component and if i
 
 In this article, we will look at ways to implement this "Job Queue" pattern, using a RDBMS (MySQL) and Redis,  and look at the "Pros" and "Cons" of both the methods.  
 
-Let us consider the following use case,  "Customer’s of a bank,  log in to the online banking system and submit requests for downloading historical transaction statement. They transaction statement is then sent to the customer via an email message"
+Let us consider the following use case,  *"Customer’s of a bank,  log in to the online banking system and submit requests for downloading historical transaction statement. They transaction statement is then sent to the customer via an email message"*
 
-We are mainly interested in looking at, how to have multiple instances of "Processor" components process jobs from the queue concurrently without duplication i.e we should not process the same job twice.  For the methods that are discussed here, I have provided a sample implementation and you can find the source code here. The implementation is in Java and uses Spring framework.
+We are mainly interested in looking at, how to have multiple instances of "Processor" components process jobs from the queue concurrently without duplication i.e we should not process the same job twice.  For the methods that are discussed here, I have provided a sample implementation and you can find the source code [here.](https://github.com/messagetobala/messagetobala.github.io/tree/master/Queue-Processor) The implementation is in Java and uses Spring framework.
 
 
 # Using RDBMS
@@ -66,7 +75,7 @@ As the jobs are added to the table,  the Processor component should pick up the 
 > ***How could we make sure that no two Processor instances are processing the same job?***
 
 
-## Method 1 - Using "status" column for locking
+## RDBMS Method 1 - Using "status" column for locking
 
 One straight forward way is to use the "status" column. Each Processor instance before beginning  to process a job, will try to update the "status" column  from "submitted" to "in_progress".  If it updated the row, the job can be processed by that instance. If it did not update the row, the job should be skipped.  In this method we are using the value of the "status" column as a locking mechanism.
 
@@ -265,7 +274,7 @@ public class HistoricalStatementWorker_v1 {
     }
 ```       
 
-## Method 2 - Using "SKIP LOCKED" ##
+## RDBMS Method 2 - Using "SKIP LOCKED" ##
 
 One drawback of  "Method 1" is that though we are processing the job concurrently across multiple Processor instances, it is not strictly 100% concurrent.  This is because, each Processor instance still has to look at every job and try to acquire a lock.  It will be good if each Processor instance can get distinct jobs from the database and process it without have to acquire lock. 
 
