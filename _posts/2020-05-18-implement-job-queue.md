@@ -82,7 +82,8 @@ One straight forward way is to use the "status" column. Each Processor instance 
 The algorithm for this method  looks something like this,
 
 
-    Call stored procedure "get_job_list_to_process" to get a batch of jobs that is in "submitted" status.
+    Call stored procedure "get_job_list_to_process" to get a batch of jobs that 
+    is in "submitted" status.
     For each job
         Call procedure "update_job_status" to update the status of job from 
         "submitted" to "in progress". The procedure should update the status only if the 
@@ -97,7 +98,7 @@ Let us take a look at the two stored procedures mentioned in the algorithm.
 
 ***get_job_list_to_process***
 
-``` sql
+{% highlight sql linenos %}
 create procedure get_job_list_to_process
 (
   batch_size int
@@ -107,7 +108,8 @@ begin
   if batch_size is null or batch_size <= 0 then
       signal validation_error set message_text = 'Invalid value for batch_size';     
   end if; 
-  -- update status of  any job which is 'in_progress' state for 5 minutes or more
+  -- update status of  any job which is 'in_progress' state for 
+  -- 5 minutes or more
   update historical_statement_job set status = 'submitted'
   where status = 'in_progress' and
   timestampdiff(minute, updated_at, now()) >=5;
@@ -117,7 +119,7 @@ begin
   order by id asc
   limit batch_size; 
 end;
- ```   
+{% endhighlight %}
 
 The stored procedure  accepts a  single argument "batch_size", which is the number of jobs to return.  This allows a Processor instance to handle jobs in batches.    
 
@@ -127,7 +129,7 @@ Let us say one of the Processor instance crashed. What happens to all the jobs  
 
 ***update_job_status***
 
-``` sql
+{% highlight sql linenos %}
 create procedure update_job_status
 (
   job_id int unsigned,
@@ -151,7 +153,8 @@ begin
   status = current_status;
   set updated_count = row_count();
 end;
- ```   
+ {% endhighlight %}
+
 
 The stored procedure accepts the job id , the existing status of the job and new status of the job as input arguments.  It uses output arguments to pass on the number of rows it updated.
 
@@ -159,7 +162,7 @@ Now let us look at the implementation of  the Processor component that will use 
 
 ***RDBMSHistoricalStatementProcessor_v1.java***
 
-``` java
+{% highlight java linenos %}
 public class RDBMSHistoricalStatementProcessor_v1 {
 
 private static final Logger logger = LoggerFactory.getLogger(RDBMSHistoricalStatementProcessor_v1.class);
@@ -229,7 +232,7 @@ public void setRunning(boolean running) {
     this.running = running;
 }
 }
-```
+{% endhighlight %}
 The method "processHistoricalStatementJobs" is where our queue processing is implemented. At line 15, we call  the method "getJobListToProcess" which executes the stored procedure "get_job_list_to_process" and returns a list of jobs that are in "submitted" state and needs to be processed.
 
 Then for each job we try to acquire a lock.  This is done in the "acquireLock" method. We call the stored procedure "update_job_status" and try to update the state of the job from "submitted" to "in_progress". If the stored procedure updated the status it would return "1" via the output parameter, which is interpreted as "*the lock has been acquired*".   Otherwise it returns "0", which is interpreted as "*the lock has not been acquired*".
@@ -245,7 +248,7 @@ The actual processing of the job is done in "HistoricalStatementWorker_v1" class
 
 ***HistoricalStatementWorker_v1.java***
 
-``` java
+{% highlight java linenos %}
 public class HistoricalStatementWorker_v1 {
   private static final Logger logger = LoggerFactory.getLogger(HistoricalStatementWorker_v1.class);
   private HistoricalStatementDAO dao;
@@ -256,23 +259,23 @@ public class HistoricalStatementWorker_v1 {
   private void doWork(HistoricalStatementJob job) throws HistoricalStatementException   {
     //Do actual work
   }
-  public void processJob(HistoricalStatementJob job) throws HistoricalStatementException 
-  {  
+  public void processJob(HistoricalStatementJob job) throws HistoricalStatementException {  
       logger.info("Processing job {}", job.getJobId());     
       try {
-      doWork(job);
-      //Update status to completed.
-    dao.updateJobStatus(job.getJobId(), JobStatus.IN_PROGRESS, 
-    JobStatus.COMPLETED);
-    } catch(HistoricalStatementException e) {
-    if (e.isPermFailure()) {
-      dao.updateJobStatus(job.getJobId(), JobStatus.IN_PROGRESS, 
-    JobStatus.FAILED);
-    }
-    //otherwise will be retried.
+        doWork(job);
+        //Update status to completed.
+        dao.updateJobStatus(job.getJobId(), JobStatus.IN_PROGRESS, 
+        JobStatus.COMPLETED);
+      } catch(HistoricalStatementException e) {
+        if (e.isPermFailure()) {
+          dao.updateJobStatus(job.getJobId(), JobStatus.IN_PROGRESS, 
+          JobStatus.FAILED);
+        }
+        //otherwise will be retried.
       }  
-    }
-```       
+  }
+}
+{% endhighlight %}      
 
 ## RDBMS Method 2 - Using "SKIP LOCKED" ##
 
@@ -292,14 +295,14 @@ Assuming that in the job table we have the following two jobs in "submitted" sta
 What happens if two Processor instances executes the following query ?
 
 ``` sql
-select * from historical_statement_job where status; 
+select * from historical_statement_job where status order by id limit 1; 
 ```
 As you  might have guessed, both the Processor instances would get the same job record.  
 
 time  | Transaction  in  1st Processor instance | Transaction in 2nd Processor instance            
 ----- | --------------------------------------- | --------------------- 
 t1    | start transaction;           | start transaction;     
-t2    |#>select * from historical_statement_job where status = 'submitted' order by id limit 1; <br> _____ <br> id:1 | #>select * from historical_statement_job where status = 'submitted' order by id limit 1; <br> _____ <br> id:1
+t2    |#>select * from historical_statement_job where status = 'submitted' order by id limit 1; <br> _____ <br> id:1 (Showing only 'id' column due to space constranints)| #>select * from historical_statement_job where status = 'submitted' order by id limit 1; <br> _____ <br> id:1 (Showing only 'id' column due to space constranints)
 t3    | commit; | commit;
 
 
@@ -333,7 +336,7 @@ The implementation of this approach is in the classes "RDBMSHistoricalStatementP
 
 ***RDBMSHistoricalStatementProcessor_v2.java***
 
-``` java
+{% highlight java linenos %}
 public class RDBMSHistoricalStatementProcessor_v2 {
 
   private static final Logger logger = LoggerFactory.getLogger(RDBMSHistoricalStatementProcessor_v2.class);
@@ -342,28 +345,29 @@ public class RDBMSHistoricalStatementProcessor_v2 {
   private HistoricalStatementWorker_v2 worker;  
   private  boolean running = true;
   private ExecutorService executor =  Executors.newFixedThreadPool(BATCH_SIZE);
+ 
   public void processHistoricalStatementJobs() {   
     for (int i = 0; i < BATCH_SIZE; i++) {
       logger.info("Starting thread {} to process historical statement jobs" , i+1);
       executor.submit(new Runnable() {
-  @Override
-  public void run() {
-    while (running) {
-      try {
-    HistoricalStatementJob job = worker.processJob();
-    if (job == null) {
-      try {
-  logger.info("No pending jobs found for processing. Sleeping for a second");
-  Thread.sleep(1000);
-      } catch (InterruptedException e) {
-  break;
-      }
-    }  
-      } catch (HistoricalStatementException e) {
-  logger.error("Error processing job", e);
-      }
-  }
-        }
+        @Override
+          public void run() {
+            while (running) {
+              try {
+                HistoricalStatementJob job = worker.processJob();
+                if (job == null) {
+                  try {
+                    logger.info("No pending jobs found for processing. Sleeping for a second");
+                    Thread.sleep(1000);
+                  } catch (InterruptedException e) {
+                    break;
+                  }
+                }  
+              } catch (HistoricalStatementException e) {
+                logger.error("Error processing job", e);
+              }
+            }
+          }
       });
     }
   }
@@ -372,11 +376,11 @@ public class RDBMSHistoricalStatementProcessor_v2 {
     this.running = running;
   }
 }
-```
+{% endhighlight %} 
 
 In "processHistoricalStatementJobs" method we use the ExecutorService to start multiple job processor threads.  Each job processor thread calls "processJob" method in class "HistoricalStatementWorker_v2" , which would get a single job from the database, process it , update the result and return the job information..   If "processJob" did not find any job in the database, the job processor thread would wait for a second before polling the database again.
 
-``` java
+{% highlight java linenos %}
 public class HistoricalStatementWorker_v2 {
   private static final Logger logger = LoggerFactory.getLogger(HistoricalStatementWorker_v2.class);   
   private HistoricalStatementDAO dao;
@@ -408,7 +412,7 @@ public class HistoricalStatementWorker_v2 {
     return job;
   }
 }
-```    
+{% endhighlight %}   
 
 One important thing is, if you look at "processJob" method you will notice that it is annotated with the Spring "@Transactional" annotation. This ensures that all the database operations like selecting the job row , the actual processing of the job and updating the result happens in a single transaction. 
 
@@ -420,15 +424,15 @@ The "SKIP LOCKED" clause is available from MySQL 8.0.1 version. It is also avail
 
 Redis is a in-memory data store which provides a set of data types(Set, Lists etc) and pre-defined list of operations that can be performed on each of these data types. Though widely used for implementing a caching layer, it could also be used as a messaging queue, to implement distributed locking and as pub/sub messaging system.
 
-To implement our "Job Queue" using Redis, we could make use of its "Lists" data type  A Redis list data type allows us to store one or more elements in a key. We could add elements either at the head of the list (Using LPUSH operation) or at the tail of the list (Using RPUSH). Similarly we could pop elements from the list either at the head position(RPOP) or at the tail position(LPOP).
+To implement our "Job Queue" using Redis, we could make use of its "Lists" data type  A Redis list data type allows us to store one or more elements in a key. We could add elements either at the head of the list (Using LPUSH operation) or at the tail of the list (Using RPUSH). Similarly we could pop elements from the list either at the tail position(RPOP) or at the head position(LPOP).
 
-The Receiver component, as it receives new job requests, would add the jobs to a Redis List using the LPUSH operation. The Processor instances could then pop these jobs using the RPOP operation and process them. Redis ensures that if there two RPOP operations at the same instant, the same element is not popped twice. So, we need not worry about the same job being processed by two Processor instances.
+While using Redis, the Receiver component, as it receives new job requests, would add the jobs to a Redis List using the LPUSH operation. The Processor instances could then pop these jobs using the RPOP operation and process them. Redis ensures that if there two RPOP operations at the same instant, the same element is not popped twice. So, we need not worry about the same job being processed by two Processor instances.
 
 Our sample implementation of the Processor component using Redis is in the classes "RedisHistoricalStatementProcessor" and "RedisHistoricalStatementWorker".
 
 ***RedisHistoricalStatementProcessor.java*** 
 
-``` java
+{% highlight java linenos %}
 public class RedisHistoricalStatementProcessor {
 private static final Logger logger = LoggerFactory.getLogger(RedisHistoricalStatementProcessor.class);
 private static final int BATCH_SIZE = 50;
@@ -447,13 +451,13 @@ public void processHistoricalStatementJobs() {
   }
   }
 }
- ```   
+{% endhighlight %}
 
 In "processHistoricalStatementJobs" method of the class "RedisHistoricalStatementProcessor" we start multiple threads using the ExecutorService interface. Each thread calls the "processJobs" method in class  "RedisHistoricalStatementWorker" where the actual processing of the jobs happen.
 
 ***RedisHistoricalStatementWorker.java***
 
-``` java 
+{% highlight java linenos %}
 public class RedisHistoricalStatementWorker {
   private static final Logger logger = LoggerFactory.getLogger(RedisHistoricalStatementWorker.class);
   private static final ObjectMapper mapper = new ObjectMapper();
@@ -505,13 +509,13 @@ public class RedisHistoricalStatementWorker {
     //Do actual work    
   }    
 }
-```
+{% endhighlight %}
 
-In  "processJobs" we have big while loop , where we pop jobs from a list called "pending_jobs" and process them. Once a job is processed, we will pop the next job and process it.
+In  "processJobs" method we have big while loop , where we pop jobs from a list called "pending_jobs" and process them. Once a job is processed, we will pop the next job and process it.
 
-Notice that in line 16, we are using the BRPOPLPUSH operation to pop an element from the list and not RPOP.  It is similar to RPOP , but it will block for the specified duration if there are elements to pop i.e if the list is empty.  Another functionality provided by this operation is that in addition to popping and returning an element from a list, it will also push that element into another list . **Both the pop and push operations happens in a atomic manner.**  In the sample implementation we are popping elements from the list  "pending_jobs" and pushing them into the list "in_progress_jobs". After a job is processed successfully, we are removing it from the list "in_progress_jobs".
+Notice that in line 16, we are using the BRPOPLPUSH operation to pop an element from the list and not RPOP.  It is similar to RPOP , but it will block for the specified duration if there are elements to pop from the list.  Another functionality provided by this operation is that in addition to popping and returning an element from a list, it will also push that element into another list . **Both the pop and push operations happens in a atomic manner.**  In the sample implementation we are popping elements from the list  "pending_jobs" and pushing them into the list "in_progress_jobs". After a job is processed successfully, we are removing it from the list "in_progress_jobs".
 
-So, why do we need to push elements into another list? This is required to properly handle failure scenarios.  For example, lets say the Processor instance crashed while it was processing a job.
+**So, why do we need to push elements into another list?** This is required to properly handle failure scenarios.  For example, lets say the Processor instance crashed while it was processing a job.
 Now if the job information was not added to a second list, then the job is lost. We cannot finish processing the job. But if the job information was added to a second list, we can implement some sort of error handling mechanism, by going through this second list.
 
 
@@ -520,7 +524,7 @@ Now if the job information was not added to a second list, then the job is lost.
 What are the pros and cons of choosing either RDBMS or Redis for implementing a job queue ?
 Most of the applications would definitely have an RDBMS as part of its existing architecture. So using RDBMS for job queue means we are not introducing a new component. Also, even if use Redis for job queue, we might still have to store information about the jobs in a RDBMS for features like reporting.
 
-Another advantage, I see  in  using RDBMS is that, we need not always select a job for processing on a first come first serve basis. For example, in the sample implementation, we are selecting jobs ordered by the id column. Instead we could select jobs by other criteria, like processing the jobs of customers who are in paid plan before processing the jobs of free customers. We could implement any business logic in the database while selecting a job for processing.  If using Redis, this might not be possible or might not be straight forward.  For example, if we want to differentiate jobs of paid customers and free customers, we might have to use two different lists.
+Another advantage, I see  in  using RDBMS is that, we need not always select a job for processing on a first come first serve basis. For example, in the sample implementation, we are selecting jobs ordered by the id column. Instead, we could select jobs by other criteria, like processing the jobs of customers who are in paid plan before processing the jobs of free customers. We could implement any business logic in the database while selecting a job for processing.  If using Redis, this might not be possible or might not be straight forward.  For example, if we want to differentiate jobs of paid customers and free customers, we might have to use two different lists.
 
 But the disadvantage in RDBMS is that, the locking mechanism of RDBMS could add a performance overhead. Due to this, we could be dequeuing jobs  at a slower rate than it is enqueued.  This could be OK in certain scenarios. For example, we might have period of inactivity where no new jobs are submitted and we would eventually process all the pending jobs. 
 
