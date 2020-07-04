@@ -117,7 +117,7 @@ Let us see with an example, on how all the pieces mentioned in the previous sect
 #### A SWAKS command to send messages with authentication
 ```
 >./swaks --server smtp.gmail.com:465 \
---auth-user "rbkrbkrbkrbk7@gmail.com" --auth-password "mynxswhsogohdmhr" \
+--auth-user "user_alice@gmail.com" --auth-password "password" \
 --to user_bob@outlook.com --from "user_alice@gmail.com" \
 --h-from "User Alice<user_alice@gmail.com>"\
 --h-subject "Need Urgent Help" \
@@ -236,7 +236,7 @@ The actual content of the message in MIME format would be something like below.
       
 ```
 Date: Sat, 25 Apr 2020 17:15:29 +0530 (IST) 
-From: rbkrbkrbkrbk7@gmail.com 
+From: user_alice@gmail.com 
 To: user_bob@outlook.com 
 Message-ID: <459848100.0.1587815129693@[192.168.1.2]> 
 Subject: Spoof Me If You Can 
@@ -282,7 +282,7 @@ EHLO automation1.localdomain
 250-BINARYMIME 
 250-CHUNKING
 250 SMTPUTF8
-MAIL FROM:<rbkrbkrbkrbk7@gmail.com>
+MAIL FROM:<user_alice@gmail.com>
 250 2.1.0 Sender OK
 RCPT TO:<user_bob@outlook.com>
 250 2.1.5 Recipient OK
