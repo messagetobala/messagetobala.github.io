@@ -105,9 +105,9 @@ Take a look at the following program and the sample output.
                                                        
 The program, opens a file for reading, reads a single character and then calls fork to create a child process.   After fork, both the parent and the child process continue to read from the same file descriptor.    
 
-From the output, we can see that the child process is able to read from the same file descriptor as the parent. This is  because the child process gets an exact copy of the  ‘File Descriptor Table’ from the parent at time of calling fork. See the image below.
+From the output, we can see that the child process is able to read from the same file descriptor“3” (here 3 is the file descriptor of file ‘/tmp/file1’) as the parent. This is because the child process gets an exact copy of the “File Descriptor Table” from the parent at time of calling fork. See the image below.
 
-Also note that every character is printed only once. This is because the file offset information is stored in the ‘File Table’ which is common for all processes.  So even though the parent and child process are reading the same file, we don’t see the same character printed twice.
+Also note that every character is printed only once. This is because the entry for file descriptor “3” in both the parent and child process points to the same entry in the “File Table” and thus they share the same “current offset”. So even though the parent and child process are reading the same file, we don’t see the same character printed twice.
 
 
 ![](https://paper-attachments.dropbox.com/s_40A490A0758DF9E1DC078DAB5932FC2B373486202053BADFD85DB4A709379186_1585397250445_image2.png)
